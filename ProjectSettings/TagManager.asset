@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - red1
+  - black1
+  - red2
+  - red3
+  - red4
+  - red5
+  - red6
+  - red7
+  - black2
+  - black3
+  - black4
+  - black5
+  - black6
+  - black7
+  - black
+  - red
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - red
+  - Water
+  - UI
+  - black
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Board
+    uniqueID: 271375849
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Chess
+    uniqueID: 2137812939
+    locked: 0
