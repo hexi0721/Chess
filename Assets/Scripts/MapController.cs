@@ -13,13 +13,13 @@ public class MapController : MonoBehaviour
     public GameObject black1 , black2, black3, black4, black5, black6, black7;
     public GameObject red1 , red2, red3, red4, red5, red6, red7;
 
-    private float x = -2.865f; // x 原點
-    private float y = -3.115f; // y 原點
-    private float x1 = 0.7075f; // x 間隔
-    private float y1 = 0.71f; // y 間隔
+    private int x = -8; // x 原點
+    private int y = -9; // y 原點
+    private int x1 = 2; // x 間隔
+    private int y1 = 2; // y 間隔
 
     private GameObject child;
-    private Vector2 pos;
+    private Vector3 pos;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,18 +35,18 @@ public class MapController : MonoBehaviour
     private void initMap()
     {
         
-        pos = new Vector2(0, 0);
+        pos = new Vector3(0, 0 ,0);
         Instantiation(board , pos); // 生成地圖
 
         for (int i=0;i < 5;i++) // 生成兵
         {
             
             ChangeScale(red1,false);
-            pos = new Vector2(x + i * 2 * x1, y + 3 * y1);
+            pos = new Vector3(x + i * 2 * x1, y + 3 * y1 , 0);
             Instantiation(red1, pos);
 
             ChangeScale(black1,true);
-            pos = new Vector2(x + i * 2 * x1, y + 6 * y1);
+            pos = new Vector3(x + i * 2 * x1, y + 6 * y1 , 0);
             Instantiation(black1, pos);
 
         }
@@ -54,22 +54,22 @@ public class MapController : MonoBehaviour
         // 生成帥
         
         ChangeScale(red2, false);
-        pos = new Vector2(x + 4 * x1, y);
+        pos = new Vector3(x + 4 * x1, y , 0);
         Instantiation(red2 , pos);
         
         ChangeScale(black2, true);
-        pos = new Vector2(x + 4 * x1, y + 9 * y1);
+        pos = new Vector3(x + 4 * x1, y + 9 * y1 , 0);
         Instantiation(black2, pos);
         
         for (int i = 0; i < 2; i += 1) //  生成相
         {
 
             ChangeScale(red3, false);
-            pos = new Vector2((x + 2 * x1) + i * 4 * x1, y);
+            pos = new Vector3((x + 2 * x1) + i * 4 * x1, y , 0);
             Instantiation(red3, pos);
 
             ChangeScale(black3, true);
-            pos = new Vector2((x + 2 * x1) + i * 4 * x1, y + 9 * y1);
+            pos = new Vector3((x + 2 * x1) + i * 4 * x1, y + 9 * y1 , 0);
             Instantiation(black3, pos);
             
         }
@@ -78,11 +78,11 @@ public class MapController : MonoBehaviour
         {
 
             ChangeScale(red4, false);
-            pos = new Vector2((x + x1) + i * 6 * x1, y);
+            pos = new Vector3((x + x1) + i * 6 * x1, y , 0);
             Instantiation(red4, pos);
             
             ChangeScale(black4, true);
-            pos = new Vector2((x + x1) + i * 6 * x1, y + 9 * y1);
+            pos = new Vector3((x + x1) + i * 6 * x1, y + 9 * y1 , 0);
             Instantiation(black4, pos);
             
         }
@@ -91,11 +91,11 @@ public class MapController : MonoBehaviour
         {
             
             ChangeScale(red5,false);
-            pos = new Vector2((x + x1) + i * 6 * x1, y + 2 * y1);
+            pos = new Vector3((x + x1) + i * 6 * x1, y + 2 * y1 , 0);
             Instantiation(red5, pos);
             
             ChangeScale(black5,true);
-            pos = new Vector2((x + x1) + i * 6 * x1, y + 7 * y1);
+            pos = new Vector3((x + x1) + i * 6 * x1, y + 7 * y1 , 0);
             Instantiation(black5, pos);
         }
 
@@ -103,11 +103,11 @@ public class MapController : MonoBehaviour
         {
 
             ChangeScale(red6, false);
-            pos = new Vector2(x + i * 8 * x1, y);
+            pos = new Vector3(x + i * 8 * x1, y, 0);
             Instantiation(red6, pos);
 
             ChangeScale(black6, true);
-            pos = new Vector2(x + i * 8 * x1, y + 9 * y1);
+            pos = new Vector3(x + i * 8 * x1, y + 9 * y1 , 0);
             Instantiation(black6, pos);
 
         }
@@ -116,11 +116,11 @@ public class MapController : MonoBehaviour
         {
 
             ChangeScale(red7, false);
-            pos = new Vector2((x + 3 * x1) + i * 2 * x1, y);
+            pos = new Vector3((x + 3 * x1) + i * 2 * x1, y , 0);
             Instantiation(red7, pos);
 
             ChangeScale(black7, true);
-            pos = new Vector2((x + 3 * x1) + i * 2 * x1, y + 9 * y1);
+            pos = new Vector3((x + 3 * x1) + i * 2 * x1, y + 9 * y1 , 0);
             Instantiation(black7, pos);
         }
 
@@ -146,7 +146,7 @@ public class MapController : MonoBehaviour
                 
     }
 
-    private void Instantiation(GameObject G, Vector2 pos) // 生成棋子
+    private void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
         child.transform.SetParent(mapholder);

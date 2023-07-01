@@ -168,22 +168,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f080930d21e5a4d97fdec0121db3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 9168202570964549292, guid: 583e3162eac87f94684d150f38fb5d25, type: 3}
+  board: {fileID: 1525004800294860967, guid: 812e68605f985044a8d3704b6a7d94f5, type: 3}
   mapholder: {fileID: 170185007}
-  black1: {fileID: 3483545206174565512, guid: dd58f0131aec6664789c29fc77c79200, type: 3}
-  black2: {fileID: 524133373463867180, guid: 7e0d2699b844c1f4b95c4e773e017c23, type: 3}
-  black3: {fileID: 1159357071286162537, guid: d0a1f813a33b13d40b3be636cfebef1b, type: 3}
-  black4: {fileID: 4492292813943764954, guid: 539cfabd7151c564091d664a9c25d345, type: 3}
-  black5: {fileID: 1733171454366862333, guid: 052d1e54455b7f243b044c8d3e26988e, type: 3}
-  black6: {fileID: 7473548449613587120, guid: ce337699fc3f67b45bcd4ad21d742189, type: 3}
-  black7: {fileID: 7484997165596709691, guid: ea66ce0a3793b2d4e9574b366db23fca, type: 3}
-  red1: {fileID: 3273870997522342059, guid: 5cafa9e4e63bf2d488ecd9e28f0b3dba, type: 3}
-  red2: {fileID: 4323401747998616444, guid: c721f11e6279d744e9c8cee2766db063, type: 3}
-  red3: {fileID: 8975687472503337536, guid: b2f3658ff7167874ea51e8934cebe502, type: 3}
-  red4: {fileID: 7271699765067602869, guid: 673dd9c36adba844285e69fda0506648, type: 3}
-  red5: {fileID: 2466759769170265802, guid: 61ccf568d86977e4bae3230c972e374b, type: 3}
-  red6: {fileID: 5443086825212710757, guid: 816b92a88101daf40b0870b190139fef, type: 3}
-  red7: {fileID: 3809680627041877899, guid: f2c2e0afe08c2f44688571c9ee2ff239, type: 3}
+  black1: {fileID: 4295706260111133158, guid: 91da368dfde62d7449c698e9dfac772b, type: 3}
+  black2: {fileID: 5060011232509129036, guid: c5c1ea4bbe4f4854b8e5c1132d9b8e8d, type: 3}
+  black3: {fileID: 6290902598992884593, guid: 1c098f368682aa5489f46ed1fe3efd10, type: 3}
+  black4: {fileID: 1608146170946507924, guid: d5ce78821c77a2a45b7a33587f1b4ceb, type: 3}
+  black5: {fileID: 5849993691733479824, guid: fc48826a49f1195468cc3586f4824a3e, type: 3}
+  black6: {fileID: 543805700552390973, guid: 877ab74fa4a8b23448c3d82889c80231, type: 3}
+  black7: {fileID: 3795256757355658929, guid: 13671f79d013ada4db8db14aabab5fca, type: 3}
+  red1: {fileID: 6013655175189173629, guid: 95aa11118a976fc4d93043cba1bc18e7, type: 3}
+  red2: {fileID: 8875613578798498196, guid: 96bdc2bd4cc312b4ba353632aa11c04b, type: 3}
+  red3: {fileID: 8194505550341881332, guid: d26b9042456a0f943a5997df956b7777, type: 3}
+  red4: {fileID: 151492353956030006, guid: 97baafe8235c2344ea751d4c91aeead4, type: 3}
+  red5: {fileID: 7125771807805049313, guid: 332c7594f7b40154b86ed165dc5de7f1, type: 3}
+  red6: {fileID: 8457510261019717602, guid: 1f6429fe53b74f54a98ea66ce96d3586, type: 3}
+  red7: {fileID: 6238776980479714745, guid: fe19139bd899d9843b859e99fc5b1338, type: 3}
 --- !u!114 &133833465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +263,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 0.7731253, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -280,7 +280,7 @@ Camera:
   far clip plane: 1000
   field of view: 103
   orthographic: 1
-  orthographic size: 3.95
+  orthographic size: 11
   m_Depth: 2
   m_CullingMask:
     serializedVersion: 2

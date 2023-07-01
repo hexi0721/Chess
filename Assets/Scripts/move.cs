@@ -25,6 +25,18 @@ public class move : MonoBehaviour
                 Debug.Log("1");
                 break;
 
+            case "red2":
+            case "black2":
+
+                Debug.Log("2");
+                break;
+
+            case "red6":
+            case "black6":
+
+
+
+                break;
 
         }
             

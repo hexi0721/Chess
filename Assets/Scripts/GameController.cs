@@ -14,13 +14,13 @@ public class GameController : MonoBehaviour
     public static string target;
 
     // 癬翴
-    private float OriginalX = -2.865f;
-    private float OriginalY = -3.115f;
+    private int OriginalX = -8;
+    private int OriginalY = -9;
 
-    private float x = -3.21875f; // 程オ
-    private float y = -3.47f; // 程
-    private float x1 = 0.7075f; // x丁筳
-    private float y1 = 0.71f; // y丁筳
+    private int x = -9; // 程オ
+    private int y = -10; // 程
+    private int x1 = 2; // x丁筳
+    private int y1 = 2; // y丁筳
 
     // Start is called before the first frame update
     void Start()
@@ -55,14 +55,15 @@ public class GameController : MonoBehaviour
                  if (Match(hit,turn))
                      dragging = hit.transform;
                  target = hit.transform.tag;
+                Debug.Log(hit.transform.name);
             }
             else if (dragging != null)
             {
                 Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 pos.z = 0;
-                float tmp = 0.0f;
+                int tmp = 0;
                 TargetPos = new Vector3(0,0,0);
-                for (float i = x; i < OriginalX + x1 * 8 + 0.35375; i += x1)
+                for (int i = x; i < OriginalX + x1 * 8 ; i += x1)
                 {
                     float itmp = i + x1;
                     
@@ -70,33 +71,33 @@ public class GameController : MonoBehaviour
                     {
                         
                         TargetPos.x = OriginalX + tmp * x1;
-                        //Debug.Log("x " + TargetPos.x);
+                        Debug.Log("x " + TargetPos.x);
                         break;
                         
                     }
 
-                    tmp += 1.0f;
+                    tmp += 1;
                 }
-                tmp = 0.0f;
-                for (float j = y; j < OriginalY + y1 * 9 + 0.355; j += y1)
+                tmp = 0;
+                for (int j = y; j < OriginalY + y1 * 9 ; j += y1)
                 {
-                    float jtmp = j + y1;
+                    int jtmp = j + y1;
                     
                     if ((pos.y > j) && (pos.y < jtmp))
                     {
                         
                         TargetPos.y = OriginalY + tmp * y1;
-                        //Debug.Log("y " + TargetPos.y);
+                        Debug.Log("y " + TargetPos.y);
                         break;
                     }
 
-                    tmp += 1.0f;
+                    tmp += 1;
                 }
 
-                if ((pos.x > -3.21875f) && (pos.y > -3.47f) && (pos.x < OriginalX + x1 * 8 + 0.35375) && (pos.y < OriginalY + y1 * 9 + 0.355))
+                if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ))
                     dragging.position = TargetPos;
-                
 
+                //dragging.position = TargetPos;
                 dragging = null;
                 
 
