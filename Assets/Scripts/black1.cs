@@ -7,23 +7,23 @@ using System.Text.RegularExpressions;
 public class black1 : MonoBehaviour
 {
     
-    private Vector3 tmp;
+    private Vector3 pos;
     
     // Start is called before the first frame update
     void Start()
     {
-        tmp = transform.position;
+        pos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(GameController.turn);
-        if (transform.position != tmp) // 檢測是否未移動 有移動則交換回合 並賦予新位置
+        
+        if (transform.position != pos) // 檢測是否未移動 有移動則交換回合 並賦予新位置
         {
             GameController.turn = !GameController.turn;
-            
-            tmp = transform.position;
+            //GameController.turn = false; //測試
+            pos = transform.position;
         }
 
     }

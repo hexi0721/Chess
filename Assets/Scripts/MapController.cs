@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class MapController : MonoBehaviour
 {
-    // x一格0.7075 y一格0.71
+    
     public GameObject board;
     
-    public Transform mapholder;
-    
+    public Transform RedChess;
+    public Transform BlackChess;
+
     // 兵 帥 相 馬 炮 車 士
     public GameObject black1 , black2, black3, black4, black5, black6, black7;
     public GameObject red1 , red2, red3, red4, red5, red6, red7;
+
+    //public static List<Vector3> location = new List<Vector3>(); // 已存在的座標
 
     private int x = -8; // x 原點
     private int y = -9; // y 原點
@@ -37,6 +41,7 @@ public class MapController : MonoBehaviour
         
         pos = new Vector3(0, 0 ,0);
         Instantiation(board , pos); // 生成地圖
+        //location.Remove(new Vector3(0,0,0));
 
         for (int i=0;i < 5;i++) // 生成兵
         {
@@ -52,7 +57,6 @@ public class MapController : MonoBehaviour
         }
 
         // 生成帥
-        
         ChangeScale(red2, false);
         pos = new Vector3(x + 4 * x1, y , 0);
         Instantiation(red2 , pos);
@@ -60,8 +64,9 @@ public class MapController : MonoBehaviour
         ChangeScale(black2, true);
         pos = new Vector3(x + 4 * x1, y + 9 * y1 , 0);
         Instantiation(black2, pos);
-        
-        for (int i = 0; i < 2; i += 1) //  生成相
+
+        //  生成相
+        for (int i = 0; i < 2; i += 1) 
         {
 
             ChangeScale(red3, false);
@@ -74,7 +79,8 @@ public class MapController : MonoBehaviour
             
         }
 
-        for (int i = 0; i < 2; i += 1) //  生成馬
+        //  生成馬
+        for (int i = 0; i < 2; i += 1) 
         {
 
             ChangeScale(red4, false);
@@ -87,7 +93,8 @@ public class MapController : MonoBehaviour
             
         }
 
-        for (int i = 0; i < 2; i+=1) // 生成炮
+        // 生成炮
+        for (int i = 0; i < 2; i+=1) 
         {
             
             ChangeScale(red5,false);
@@ -99,7 +106,8 @@ public class MapController : MonoBehaviour
             Instantiation(black5, pos);
         }
 
-        for (int i = 0; i < 2; i += 1) //  生成車
+        //  生成車
+        for (int i = 0; i < 2; i += 1) 
         {
 
             ChangeScale(red6, false);
@@ -112,7 +120,8 @@ public class MapController : MonoBehaviour
 
         }
 
-        for (int i = 0; i < 2; i += 1) // 生成士
+        // 生成士
+        for (int i = 0; i < 2; i += 1) 
         {
 
             ChangeScale(red7, false);
@@ -129,19 +138,21 @@ public class MapController : MonoBehaviour
 
     private void ChangeScale(GameObject G , bool Flip) // 改變大小 轉向 設置層
     {
+        int layer;
         G.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         
         if (Flip)
         {
             G.GetComponent<SpriteRenderer>().flipY = true;
-            int layer = LayerMask.NameToLayer("black");
+            layer = LayerMask.NameToLayer("black");
             G.layer = layer;
             
         }
         else
         {
-            int layer = LayerMask.NameToLayer("red");
+            layer = LayerMask.NameToLayer("red");
             G.layer = layer;
+            
         }
                 
     }
@@ -149,7 +160,21 @@ public class MapController : MonoBehaviour
     private void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
-        child.transform.SetParent(mapholder);
+
+        
+
+        if (Regex.IsMatch(G.transform.tag, "red"))
+        {
+            
+            child.transform.SetParent(RedChess);
+        }
+        else if (Regex.IsMatch(G.transform.tag, "black"))
+        {
+            child.transform.SetParent(BlackChess);
+        }
+            
+
+        //location.Add(pos);
     }
 
 

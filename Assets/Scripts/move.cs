@@ -17,28 +17,7 @@ public class move : MonoBehaviour
 
         
 
-        switch (GameController.target)
-        {
-            case "red1":
-            case "black1":
 
-                Debug.Log("1");
-                break;
-
-            case "red2":
-            case "black2":
-
-                Debug.Log("2");
-                break;
-
-            case "red6":
-            case "black6":
-
-
-
-                break;
-
-        }
             
             
 
