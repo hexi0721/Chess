@@ -507,10 +507,10 @@ public class GameController : MonoBehaviour
 
             case "Left":
 
-                if (hit.transform.position.x >= pos.x)
+                if (hit && hit.transform.position.x >= pos.x)
                 {
 
-                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -525,10 +525,10 @@ public class GameController : MonoBehaviour
 
             case "Right":
 
-                if (hit.transform.position.x <= pos.x)
+                if (hit && hit.transform.position.x <= pos.x)
                 {
 
-                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -545,10 +545,10 @@ public class GameController : MonoBehaviour
 
             case "Up":
 
-                if (hit.transform.position.y <= pos.y)
+                if (hit && hit.transform.position.y <= pos.y)
                 {
 
-                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -564,10 +564,10 @@ public class GameController : MonoBehaviour
 
             case "Down":
 
-                if (hit.transform.position.y >= pos.y)
+                if (hit && hit.transform.position.y >= pos.y)
                 {
 
-                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
                     {
                         return true;
                     }
