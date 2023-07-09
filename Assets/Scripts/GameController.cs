@@ -239,34 +239,7 @@ public class GameController : MonoBehaviour
                     case "red5": // 炮
                     case "black5":
 
-                        hit = Physics2D.Raycast(dragging.position + Vector3.up, Vector3.up,
-                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-                        if (hit)
-                        {
-                            Debug.Log(hit.transform.name + hit.transform.position + TargetPos);
-                            
-                            
-                        }
-
-                        if ((TargetPos.x == dragging.position.x) || (TargetPos.y == dragging.position.y))
-                        {
-                            if(hit.transform.position == TargetPos && )
-                            {
-                                
-                                Debug.Log("1");
-                                Movable = false;
-                            }
-
-
-
-                            else
-                            {
-                                Debug.Log("2");
-                                Movable = true;
-                            }
-                            
-                        }
+                        Movable = Chess5CanMove(TargetPos, dragging.position);
 
                         break;
 
@@ -421,18 +394,18 @@ public class GameController : MonoBehaviour
     }
 
     // 馬走法函數
-    private bool Chess4CanMove(Vector3 TPos, Vector3 pos)
+    private bool Chess4CanMove(Vector3 Tpos, Vector3 pos)
     {
 
-        if ((Mathf.Abs(TPos.x - dragging.position.x) + Mathf.Abs(TPos.y - dragging.position.y) == 6)
-                && (Mathf.Abs(TPos.x - dragging.position.x) != 6)
-                && (Mathf.Abs(TPos.y - dragging.position.y) != 6))
+        if ((Mathf.Abs(Tpos.x - dragging.position.x) + Mathf.Abs(Tpos.y - dragging.position.y) == 6)
+                && (Mathf.Abs(Tpos.x - dragging.position.x) != 6)
+                && (Mathf.Abs(Tpos.y - dragging.position.y) != 6))
             {
 
-                if  (((TPos.x == pos.x + 4) && (Chess4RayDirection(TPos , pos , Vector3.right , "Right"))) ||
-                    ((TPos.x == pos.x - 4) && (Chess4RayDirection(TPos, pos, Vector3.left, "Left"))) ||
-                    ((TPos.y == pos.y + 4) && (Chess4RayDirection(TPos, pos, Vector3.up, "Up"))) ||
-                    ((TPos.y == pos.y - 4) && (Chess4RayDirection(TPos, pos, Vector3.down, "Down"))))
+                if  (((Tpos.x == pos.x + 4) && (Chess4RayDirection(Tpos, pos , Vector3.right , "Right"))) ||
+                    ((Tpos.x == pos.x - 4) && (Chess4RayDirection(Tpos, pos, Vector3.left, "Left"))) ||
+                    ((Tpos.y == pos.y + 4) && (Chess4RayDirection(Tpos, pos, Vector3.up, "Up"))) ||
+                    ((Tpos.y == pos.y - 4) && (Chess4RayDirection(Tpos, pos, Vector3.down, "Down"))))
                 {
                     return false;
                 }
@@ -495,8 +468,124 @@ public class GameController : MonoBehaviour
         return false;
     }
 
+    // 炮砲走法函數
+    private bool Chess5CanMove(Vector3 Tpos , Vector3 pos)
+    {
+        if ((Tpos.x == pos.x) || (Tpos.y == pos.y))
+        {
+            if ((Tpos.x <= pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.left, Vector3.right, "Left")) ||
+                (Tpos.x >= pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.right, Vector3.left, "Right")) ||
+                (Tpos.y >= pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.up, Vector3.down, "Up")) ||
+                (Tpos.y <= pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.down, Vector3.up, "Down")))
+            {
+
+                 return true;
+                
+            }
+
+        }
+
+        return false;
+    }
+
+    // 炮砲碰撞檢測機制
+    private bool Chess5RayDirection(Vector3 pos, Vector3 d , Vector3 v1 , Vector3 v2 , string s)
+    {   // 原點
+        RaycastHit2D hit = Physics2D.Raycast(d + v1, v1 ,
+                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        // 點擊目標
+        RaycastHit2D hit2 = Physics2D.Raycast(pos + v2, v2,
+                        Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        
+        // 點擊位置
+        RaycastHit2D hit3 = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero,
+                        Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
 
+        switch (s)
+        {
+
+            case "Left":
+
+                if (hit.transform.position.x >= pos.x)
+                {
+
+                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+
+                break;
+
+            case "Right":
+
+                if (hit.transform.position.x <= pos.x)
+                {
+
+                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+
+
+                break;
+
+
+            case "Up":
+
+                if (hit.transform.position.y <= pos.y)
+                {
+
+                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                
+
+                break;
+
+            case "Down":
+
+                if (hit.transform.position.y >= pos.y)
+                {
+
+                    if (hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+
+                break;
+
+        }
+
+
+        return true;
+
+    }
 
 
 }
