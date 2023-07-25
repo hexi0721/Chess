@@ -15,8 +15,6 @@ public class MapController : MonoBehaviour
     public GameObject black1 , black2, black3, black4, black5, black6, black7;
     public GameObject red1 , red2, red3, red4, red5, red6, red7;
 
-    //public static List<Vector3> location = new List<Vector3>(); // 已存在的座標
-
     private int x = -8; // x 原點
     private int y = -9; // y 原點
     private int x1 = 2; // x 間隔
@@ -41,7 +39,6 @@ public class MapController : MonoBehaviour
         
         pos = new Vector3(0, 0 ,0);
         Instantiation(board , pos); // 生成地圖
-        //location.Remove(new Vector3(0,0,0));
 
         for (int i=0;i < 5;i++) // 生成兵
         {
@@ -157,7 +154,7 @@ public class MapController : MonoBehaviour
                 
     }
 
-    private void Instantiation(GameObject G, Vector3 pos) // 生成棋子
+    public void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
 
@@ -174,7 +171,6 @@ public class MapController : MonoBehaviour
         }
             
 
-        //location.Add(pos);
     }
 
 

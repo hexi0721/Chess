@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text.RegularExpressions; 
+using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     private Transform dragging ; // 棋子位置
+    private GameController G;
 
     public static bool turn; // false:紅方 true:黑方
     private int layermask; // 層
@@ -23,32 +25,74 @@ public class GameController : MonoBehaviour
     private int x1 = 2; // x間隔
     private int y1 = 2; // y間隔
 
-    
+    // Text
+    private Text TurnText;
+    private Text WhoWinText;
+
 
     // Start is called before the first frame update
     void Start()
     {
         dragging = null;
         turn = false;
+
+        TurnText = GameObject.Find("turn").GetComponent<Text>(); // 回合文字
+        TurnText.text = "紅方回合";
+
+        WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負
+        WhoWinText.text = "";
+
+        G = GetComponent<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (GameObject.FindWithTag("red2") == null || GameObject.FindWithTag("black2") == null)
+        {
+            TurnText.text = "";
+            if (turn)
+            {
+
+                WhoWinText.text = "紅方勝 !";
+
+            }
+            else
+            {
+                WhoWinText.text = "黑方勝 !";
+            }
+
+            G.enabled = false;
+
+        }
+        else
+        {
+            if (turn)
+            {
+                TurnText.text = "黑方回合";
+            }
+            else
+            {
+                TurnText.text = "紅方回合";
+            }
+        }
+       
+
         if (Input.GetMouseButtonDown(0)) // 點擊
         {
 
-            //MapController.location.ForEach(num => Debug.Log(num + ", "));
             if (turn == false) // 紅方回合
             {
                 layermask = LayerMask.NameToLayer("red");
                 layermask = 1 << layermask;
+                
             }
             else // 黑方回合
             {
                 layermask = LayerMask.NameToLayer("black");
                 layermask = 1 << layermask;
+                
             }
 
             // 棋子
@@ -61,7 +105,7 @@ public class GameController : MonoBehaviour
                  if (Match(hit,turn)) // 判斷誰的回合誰動
                      dragging = hit.transform;
                  target = hit.transform.tag;
-                //Debug.Log(hit.transform.name);
+                
             }
             else if (dragging != null)
             {
@@ -295,20 +339,18 @@ public class GameController : MonoBehaviour
                 {
                     dragging.position = TargetPos;
                     Movable = false;
+
+                    turn = !turn; // 改變回合
+
                 }
-                    
+
+                
                 dragging = null;
                 
 
             }
 
-            
-
         }
-        
-        
-
-        
 
     }
 
@@ -586,6 +628,8 @@ public class GameController : MonoBehaviour
         return true;
 
     }
+
+
 
 
 }

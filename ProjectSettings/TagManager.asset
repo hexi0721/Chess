@@ -63,3 +63,6 @@ TagManager:
   - name: Chess
     uniqueID: 2137812939
     locked: 0
+  - name: game_option
+    uniqueID: 2727054083
+    locked: 0
