@@ -140,7 +140,7 @@ public class MapController : MonoBehaviour
         
         if (Flip)
         {
-            G.GetComponent<SpriteRenderer>().flipY = true;
+            G.GetComponent<SpriteRenderer>().flipY = false;
             layer = LayerMask.NameToLayer("black");
             G.layer = layer;
             
@@ -154,7 +154,7 @@ public class MapController : MonoBehaviour
                 
     }
 
-    public void Instantiation(GameObject G, Vector3 pos) // 生成棋子
+    private void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
 
