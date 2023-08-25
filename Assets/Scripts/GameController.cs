@@ -41,9 +41,9 @@ public class GameController : MonoBehaviour
     private GameObject child;
     public Transform stat;
 
-    public Transform r, b;
-    
+    private Transform r, b;
 
+    bool Isend = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +66,9 @@ public class GameController : MonoBehaviour
 
 
         menuplain.SetActive(false);
-        
+
+        r = GameObject.FindWithTag("red2").transform;
+        b = GameObject.FindWithTag("black2").transform;
     }
 
     // Update is called once per frame
@@ -357,31 +359,40 @@ public class GameController : MonoBehaviour
 
                 }
 
+                Debug.Log(TargetPos + " " + b.transform.position + " " + r.transform.position);
+                if (TargetPos == b.transform.position || TargetPos == r.transform.position)
+                {
+                    
+                    Isend = true;
+                }
+
                 //判斷是否超出棋盤
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
                     
                     dragging.position = TargetPos;
-
-                    if (TargetPos == b.transform.position || TargetPos == r.transform.position)
-                    {
-                        
-                    }
-
-
-                    Movable = false;
-
                     turn = !turn; // 改變回合
-
-                    if(turn == false)
+                    Movable = false;
+                    if (Isend != true)
                     {
                         round += 1;
-                        RoundText.text = "第" + round + "回合 - 紅";
+                        switch (turn)
+                        {
+                            case false:
+                                RoundText.text = "第" + round + "回合 - 紅";
+                                break;
+
+                            case true:
+                                RoundText.text = "第" + round + "回合 - 黑";
+                                break;
+                        }
+
+                        
                     }
-                    else
-                    {
-                        RoundText.text = "第" + round + "回合 - 黑";
-                    }
+                    
+
+
+                    
 
                     
                     /*
