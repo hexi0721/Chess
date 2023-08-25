@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     private int y1 = 2; // y間隔
 
     // Text
-    private Text TurnText;
+    
     private Text WhoWinText;
     private Text RoundText;
 
@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
     private GameObject child;
     public Transform stat;
 
+    public Transform r, b;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,14 +51,13 @@ public class GameController : MonoBehaviour
         turn = false;
         
 
-        TurnText = GameObject.Find("turn").GetComponent<Text>(); // 回合文字
-        TurnText.text = "紅方回合";
+        
 
         WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
         WhoWinText.text = "";
 
         RoundText = GameObject.Find("round").GetComponent<Text>(); // 回合文字
-        RoundText.text = "第" + round + "回合";
+        RoundText.text = "第" + round + "回合 - 紅";
 
         G = GetComponent<GameController>();
 
@@ -77,9 +79,9 @@ public class GameController : MonoBehaviour
             menuplain.SetActive(!menuplain.activeSelf);
         }
 
-        if (GameObject.FindWithTag("red2") == null || GameObject.FindWithTag("black2") == null)
+        if (GameObject.FindWithTag("red2") == null || GameObject.FindWithTag("black2") == null) 
         {
-            TurnText.text = "";
+            
             if (turn)
             {
 
@@ -97,20 +99,7 @@ public class GameController : MonoBehaviour
             G.enabled = false;
 
         }
-        else
-        {
-            switch (turn)
-            {
-                case false:
-                    TurnText.text = "黑方回合";
-                    break;
-
-                case true:
-                    TurnText.text = "紅方回合";
-                    break;
-
-            }
-        }
+        
        
 
         if (Input.GetMouseButtonDown(0)) // 點擊
@@ -177,6 +166,7 @@ public class GameController : MonoBehaviour
 
                     tmp += 1;
                 }
+                
 
                 switch (target)
                 {
@@ -367,12 +357,18 @@ public class GameController : MonoBehaviour
 
                 }
 
-
                 //判斷是否超出棋盤
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
                     
                     dragging.position = TargetPos;
+
+                    if (TargetPos == b.transform.position || TargetPos == r.transform.position)
+                    {
+                        
+                    }
+
+
                     Movable = false;
 
                     turn = !turn; // 改變回合
@@ -380,8 +376,14 @@ public class GameController : MonoBehaviour
                     if(turn == false)
                     {
                         round += 1;
-                        RoundText.text = "第" + round + "回合";
+                        RoundText.text = "第" + round + "回合 - 紅";
                     }
+                    else
+                    {
+                        RoundText.text = "第" + round + "回合 - 黑";
+                    }
+
+                    
                     /*
                     int index = gameObject.transform.childCount;
 
@@ -391,6 +393,8 @@ public class GameController : MonoBehaviour
 
                     child.transform.SetParent(stat);
                     */
+
+
                 }
 
                 
