@@ -6,14 +6,17 @@ using System.Text.RegularExpressions;
 
 public class chess : MonoBehaviour
 {
-    
-    
+
+    private Transform stat;
+    private GameObject child;
+
+    private Text StatText;
 
     // Start is called before the first frame update
     void Start()
     {
-
-
+        StatText = GameObject.Find("stat_txt").GetComponent<Text>();
+        stat = GameObject.Find("stat").transform;
 
     }
 
@@ -33,8 +36,11 @@ public class chess : MonoBehaviour
             if (Regex.IsMatch(collision.transform.tag, "red"))
             {
                 Destroy(collision.gameObject);
-                
-                    
+
+                child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
+                child.transform.SetParent(stat);
+                StatText.text = "slain";
+
             }
                 
         }
@@ -43,8 +49,10 @@ public class chess : MonoBehaviour
             if (Regex.IsMatch(collision.transform.tag, "black"))
             {
                 Destroy(collision.gameObject);
-                
-                    
+
+                child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
+                child.transform.SetParent(stat);
+                StatText.text = "slain";
             }
                 
         }

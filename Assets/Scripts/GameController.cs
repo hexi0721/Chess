@@ -16,6 +16,9 @@ public class GameController : MonoBehaviour
     private string target; //  target tag
     private bool Movable = false; // 能否移動
 
+    private Transform r, b; // 帥 將
+    bool Isend = false; // 判斷帥或將消失
+
     // 起點
     private int OriginalX = -8;
     private int OriginalY = -9;
@@ -29,6 +32,8 @@ public class GameController : MonoBehaviour
     
     private Text WhoWinText;
     private Text RoundText;
+    private Text PressEText;
+    private Text StatText;
 
 
     // UI btn
@@ -41,31 +46,32 @@ public class GameController : MonoBehaviour
     private GameObject child;
     public Transform stat;
 
-    private Transform r, b;
 
-    bool Isend = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         dragging = null;
         turn = false;
         
-
-        
-
         WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
         WhoWinText.text = "";
 
         RoundText = GameObject.Find("round").GetComponent<Text>(); // 回合文字
         RoundText.text = "第" + round + "回合 - 紅";
 
+        PressEText = GameObject.Find("press_e").GetComponent<Text>(); // Press E
+
         G = GetComponent<GameController>();
 
         menuplain = GameObject.Find("menuplain"); // 遊戲菜單
+        menuplain.SetActive(false);
+
         gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
 
-
-        menuplain.SetActive(false);
+        StatText = GameObject.Find("stat_txt").GetComponent<Text>();
+        
 
         r = GameObject.FindWithTag("red2").transform;
         b = GameObject.FindWithTag("black2").transform;
@@ -74,13 +80,22 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // press E
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
             menuplain.SetActive(!menuplain.activeSelf);
         }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Destroy(GameObject.FindWithTag("red2"));
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            Destroy(GameObject.FindWithTag("black2"));
+            turn = !turn;
+        }
 
+        // 勝負
         if (GameObject.FindWithTag("red2") == null || GameObject.FindWithTag("black2") == null) 
         {
             
@@ -97,6 +112,7 @@ public class GameController : MonoBehaviour
 
             gamereturn_btn.SetActive(false);
             menuplain.SetActive(true);
+            PressEText.text = "";
             
             G.enabled = false;
 
@@ -359,23 +375,31 @@ public class GameController : MonoBehaviour
 
                 }
 
-                Debug.Log(TargetPos + " " + b.transform.position + " " + r.transform.position);
+                
                 if (TargetPos == b.transform.position || TargetPos == r.transform.position)
                 {
-                    
                     Isend = true;
                 }
 
                 //判斷是否超出棋盤
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
-                    
+
+                    int index = stat.childCount;
+                    Debug.Log(index + "\n");
+                    for (int i = index-1; i >= 0; i--)
+                    {
+                        Debug.Log(stat.GetChild(i).gameObject);
+                        Destroy(stat.GetChild(i).gameObject);
+                    }
+
+
                     dragging.position = TargetPos;
                     turn = !turn; // 改變回合
                     Movable = false;
                     if (Isend != true)
                     {
-                        round += 1;
+                        
                         switch (turn)
                         {
                             case false:
@@ -384,26 +408,21 @@ public class GameController : MonoBehaviour
 
                             case true:
                                 RoundText.text = "第" + round + "回合 - 黑";
+                                round += 1;
                                 break;
                         }
 
                         
                     }
                     
-
-
+                    
+                    
                     
 
-                    
-                    /*
-                    int index = gameObject.transform.childCount;
-
-                    father = GameObject.Find(target);
-                    
-                    child = GameObject.Instantiate(father, new Vector3(0,0,0), Quaternion.identity) as GameObject;
-
+                    father = GameObject.FindWithTag(target);
+                    child = GameObject.Instantiate(father, new Vector3(-14,6,0), Quaternion.identity) as GameObject;
                     child.transform.SetParent(stat);
-                    */
+                    StatText.text = "Move";
 
 
                 }
