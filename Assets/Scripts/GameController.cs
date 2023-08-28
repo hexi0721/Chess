@@ -65,10 +65,10 @@ public class GameController : MonoBehaviour
 
         G = GetComponent<GameController>();
 
+        gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
+
         menuplain = GameObject.Find("menuplain"); // 遊戲菜單
         menuplain.SetActive(false);
-
-        gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
 
         StatText = GameObject.Find("stat_txt").GetComponent<Text>();
         
@@ -88,30 +88,34 @@ public class GameController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             Destroy(GameObject.FindWithTag("red2"));
+            Isend = true;
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
             Destroy(GameObject.FindWithTag("black2"));
             turn = !turn;
+            Isend = true;
         }
 
         // 勝負
-        if (GameObject.FindWithTag("red2") == null || GameObject.FindWithTag("black2") == null) 
+        if (Isend) 
         {
             
-            if (turn)
+            switch(turn)
             {
+                case true:
+                    WhoWinText.text = "紅方勝 !";
+                    break;
 
-                WhoWinText.text = "紅方勝 !";
-
+                case false:
+                    WhoWinText.text = "黑方勝 !";
+                    break;
             }
-            else
-            {
-                WhoWinText.text = "黑方勝 !";
-            }
+            
 
             gamereturn_btn.SetActive(false);
             menuplain.SetActive(true);
+            
             PressEText.text = "";
             
             G.enabled = false;
@@ -375,7 +379,7 @@ public class GameController : MonoBehaviour
 
                 }
 
-                
+                // 判斷帥或將是否被吃
                 if (TargetPos == b.transform.position || TargetPos == r.transform.position)
                 {
                     Isend = true;
@@ -385,13 +389,7 @@ public class GameController : MonoBehaviour
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
 
-                    int index = stat.childCount;
-                    Debug.Log(index + "\n");
-                    for (int i = index-1; i >= 0; i--)
-                    {
-                        Debug.Log(stat.GetChild(i).gameObject);
-                        Destroy(stat.GetChild(i).gameObject);
-                    }
+                    
 
 
                     dragging.position = TargetPos;
@@ -414,10 +412,14 @@ public class GameController : MonoBehaviour
 
                         
                     }
-                    
-                    
-                    
-                    
+
+                    int index = stat.childCount;
+                    //Debug.Log(index + "\n");
+                    for (int i = index - 1; i >= 0; i--)
+                    {
+                        //Debug.Log(stat.GetChild(i).gameObject);
+                        Destroy(stat.GetChild(i).gameObject);
+                    }
 
                     father = GameObject.FindWithTag(target);
                     child = GameObject.Instantiate(father, new Vector3(-14,6,0), Quaternion.identity) as GameObject;
