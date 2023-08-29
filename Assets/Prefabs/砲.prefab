@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2e75b243c427044a6cdd3b980f8fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KillAuido: {fileID: 8300000, guid: ecb642c8078cb814fb9efb6b2b223cf6, type: 3}

@@ -12,12 +12,15 @@ public class chess : MonoBehaviour
 
     private Text StatText;
 
+    public AudioClip KillAuido;
+
     // Start is called before the first frame update
     void Start()
     {
         StatText = GameObject.Find("stat_txt").GetComponent<Text>();
         stat = GameObject.Find("stat").transform;
 
+        
     }
 
     // Update is called once per frame
@@ -37,6 +40,7 @@ public class chess : MonoBehaviour
             {
                 Destroy(collision.gameObject);
 
+                AudioManager.Instance.PlayAuido(KillAuido);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
                 child.transform.SetParent(stat);
                 StatText.text = "slain";
@@ -50,6 +54,7 @@ public class chess : MonoBehaviour
             {
                 Destroy(collision.gameObject);
 
+                AudioManager.Instance.PlayAuido(KillAuido);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
                 child.transform.SetParent(stat);
                 StatText.text = "slain";

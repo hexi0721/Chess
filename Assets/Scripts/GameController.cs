@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour
     private GameObject child;
     public Transform stat;
 
+    // Audio
+    public AudioClip MoveAudio;
 
     
 
@@ -393,6 +395,7 @@ public class GameController : MonoBehaviour
 
 
                     dragging.position = TargetPos;
+                    AudioManager.Instance.PlayAuido(MoveAudio);
                     turn = !turn; // 改變回合
                     Movable = false;
                     if (Isend != true)
