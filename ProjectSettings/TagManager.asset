@@ -20,6 +20,7 @@ TagManager:
   - black7
   - black
   - red
+  - sound
   layers:
   - Default
   - TransparentFX

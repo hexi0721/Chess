@@ -6,6 +6,10 @@ public class AudioManager : MonoBehaviour
 {
     static AudioManager _instance;
 
+    public AudioClip RestartAudio, ReturnAudio, QuitAudio , MoveAudio , KillAudio;
+
+    
+
     public static AudioManager Instance
     {
         get
@@ -26,6 +30,11 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         
+        DontDestroyOnLoad(this.gameObject);
+        
+        
+
+        
     }
 
     // Update is called once per frame
@@ -33,6 +42,8 @@ public class AudioManager : MonoBehaviour
     {
         
     }
+
+    
 
     public void PlayAuido(AudioClip clip)
     {
@@ -48,11 +59,19 @@ public class AudioManager : MonoBehaviour
                 efxsource.volume = 1.0f;
                 break;
 
+            case "QuitAudio":
+            case "ResumeAudio":
+            case "RestartAudio":
+                efxsource.volume = 0.7f;
+                break;
+
+
+
 
         }
 
         
-        efxsource.Play();
+        efxsource.PlayOneShot(clip);
     }
 
 

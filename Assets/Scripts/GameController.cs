@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
     public Transform stat;
 
     // Audio
-    public AudioClip MoveAudio;
+    
 
     
 
@@ -117,22 +117,24 @@ public class GameController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // 點擊
         {
 
+            RaycastHit2D hit ;
+            RaycastHit2D hit2 ;
+
+            RaycastHit2D redhit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero,
+                Mathf.Infinity, 1 << LayerMask.NameToLayer("red"));
+            RaycastHit2D blackhit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero,
+                Mathf.Infinity, 1 << LayerMask.NameToLayer("black"));
+
             if (turn == false) // 紅方回合
             {
-                layermask = LayerMask.NameToLayer("red");
-                layermask = 1 << layermask;
-                
+                hit = redhit;
+                hit2 = blackhit;
             }
             else // 黑方回合
             {
-                layermask = LayerMask.NameToLayer("black");
-                layermask = 1 << layermask;
-                
+                hit = blackhit;
+                hit2 = redhit;
             }
-
-            // 棋子
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero ,
-                Mathf.Infinity ,layermask);
 
             if (hit)
             {
@@ -379,11 +381,21 @@ public class GameController : MonoBehaviour
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
 
-                    
-
 
                     dragging.position = TargetPos;
-                    AudioManager.Instance.PlayAuido(MoveAudio);
+
+                    if(hit2)
+                    {
+                        if (hit2.transform.position == TargetPos)
+                        {
+                            AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
+                        }
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
+                    }
+
                     turn = !turn; // 改變回合
                     Movable = false;
                     if (Isend != true)
@@ -467,37 +479,37 @@ public class GameController : MonoBehaviour
         { 
             case "LeftUp":
                 
-                if (hit)
+                if (hit && (hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y + 2))
                 {
-                    if ((hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y + 2))
-                        return false;
+                    
+                    return false;
                 }
 
                 break;
 
             case "RightUp":
-                if (hit)
+                if (hit && (hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y + 2))
                 {
-                    if ((hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y + 2))
-                        return false;
+                    
+                    return false;
                 }
 
                 break;
 
             case "LeftDown":
-                if (hit)
+                if (hit && (hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y - 2))
                 {
-                    if ((hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y - 2))
-                        return false;
+                    
+                    return false;
                 }
 
                 break;
 
             case "RightDown":
-                if (hit)
+                if (hit && (hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y - 2))
                 {
-                    if ((hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y - 2))
-                        return false;
+                    
+                    return false;
                 }
 
                 break;
@@ -514,15 +526,15 @@ public class GameController : MonoBehaviour
     private bool Chess4CanMove(Vector3 Tpos, Vector3 pos)
     {
 
-        if ((Mathf.Abs(Tpos.x - dragging.position.x) + Mathf.Abs(Tpos.y - dragging.position.y) == 6)
-                && (Mathf.Abs(Tpos.x - dragging.position.x) != 6)
-                && (Mathf.Abs(Tpos.y - dragging.position.y) != 6))
+        if ((Mathf.Abs(Tpos.x - pos.x) + Mathf.Abs(Tpos.y - pos.y) == 6)
+                && (Mathf.Abs(Tpos.x - pos.x) != 6)
+                && (Mathf.Abs(Tpos.y - pos.y) != 6))
             {
 
-                if  (((Tpos.x == pos.x + 4) && (Chess4RayDirection(Tpos, pos , Vector3.right , "Right"))) ||
-                    ((Tpos.x == pos.x - 4) && (Chess4RayDirection(Tpos, pos, Vector3.left, "Left"))) ||
-                    ((Tpos.y == pos.y + 4) && (Chess4RayDirection(Tpos, pos, Vector3.up, "Up"))) ||
-                    ((Tpos.y == pos.y - 4) && (Chess4RayDirection(Tpos, pos, Vector3.down, "Down"))))
+                if  (((Tpos.x == pos.x + 4) && (Chess4RayDirection(pos , Vector3.right , "Right"))) ||
+                    ((Tpos.x == pos.x - 4) && (Chess4RayDirection(pos, Vector3.left, "Left"))) ||
+                    ((Tpos.y == pos.y + 4) && (Chess4RayDirection(pos, Vector3.up, "Up"))) ||
+                    ((Tpos.y == pos.y - 4) && (Chess4RayDirection(pos, Vector3.down, "Down"))))
                 {
                     return false;
                 }
@@ -537,47 +549,63 @@ public class GameController : MonoBehaviour
     }
 
     // 馬碰撞檢測機制
-    private bool Chess4RayDirection(Vector3 pos, Vector3 d , Vector3 v , string s)
+    private bool Chess4RayDirection(Vector3 d , Vector3 v , string s)
     {
 
         RaycastHit2D hit = Physics2D.Raycast(d + v, v,
                                             Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
+        
         switch (s) // 判斷障礙物
         {
             case "Right":
-
-                if (hit.transform.position.x == d.x + 2)
+                
+                if(hit && (hit.transform.position.x == d.x + 2))
                 {
+                    
+                    
                     return true;
+                    
                 }
+                    
 
                 break;
 
             case "Left":
 
-                if (hit.transform.position.x == d.x - 2)
+                if(hit && (hit.transform.position.x == d.x - 2))
                 {
+                    
+                    
                     return true;
+                    
                 }
+                
 
                 break;
 
             case "Up":
 
-                if (hit.transform.position.y == d.y + 2)
+                if(hit && (hit.transform.position.y == d.y + 2))
                 {
+                    
+                    
                     return true;
+                    
                 }
+                
 
                 break;
 
             case "Down":
 
-                if (hit.transform.position.y == d.y - 2)
+                if(hit && (hit.transform.position.y == d.y - 2))
                 {
+                    
+                    
                     return true;
+                    
                 }
+                
 
                 break;
         }

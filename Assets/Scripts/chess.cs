@@ -12,7 +12,7 @@ public class chess : MonoBehaviour
 
     Text StatText;
 
-    public AudioClip KillAuido;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +57,8 @@ public class chess : MonoBehaviour
                 
         }
         
-        AudioManager.Instance.PlayAuido(KillAuido);
+        //AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
+        //AudioManager.Instance.SelectSound(1);
         StatText.text = "slain";
 
     }
