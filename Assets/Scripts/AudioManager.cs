@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
+    static AudioManager _instance;
 
     public static AudioManager Instance
     {
@@ -44,7 +44,7 @@ public class AudioManager : MonoBehaviour
                 efxsource.volume = 0.3f;
                 break;
 
-            case "MoveAuio":
+            case "MoveAudio":
                 efxsource.volume = 1.0f;
                 break;
 

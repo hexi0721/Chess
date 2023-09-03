@@ -15,13 +15,13 @@ public class MapController : MonoBehaviour
     public GameObject black1 , black2, black3, black4, black5, black6, black7;
     public GameObject red1 , red2, red3, red4, red5, red6, red7;
 
-    private int x = -8; // x 原點
-    private int y = -9; // y 原點
-    private int x1 = 2; // x 間隔
-    private int y1 = 2; // y 間隔
+    int x = -8; // x 原點
+    int y = -9; // y 原點
+    int x1 = 2; // x 間隔
+    int y1 = 2; // y 間隔
 
-    private GameObject child;
-    private Vector3 pos;
+    GameObject child;
+    Vector3 pos;
     // Start is called before the first frame update
     void Start()
     {

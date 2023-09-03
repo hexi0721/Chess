@@ -7,10 +7,10 @@ using System.Text.RegularExpressions;
 public class chess : MonoBehaviour
 {
 
-    private Transform stat;
-    private GameObject child;
+    Transform stat;
+    GameObject child;
 
-    private Text StatText;
+    Text StatText;
 
     public AudioClip KillAuido;
 
@@ -20,7 +20,6 @@ public class chess : MonoBehaviour
         StatText = GameObject.Find("stat_txt").GetComponent<Text>();
         stat = GameObject.Find("stat").transform;
 
-        
     }
 
     // Update is called once per frame
@@ -39,11 +38,9 @@ public class chess : MonoBehaviour
             if (Regex.IsMatch(collision.transform.tag, "red"))
             {
                 Destroy(collision.gameObject);
-
-                AudioManager.Instance.PlayAuido(KillAuido);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
                 child.transform.SetParent(stat);
-                StatText.text = "slain";
+
 
             }
                 
@@ -53,16 +50,16 @@ public class chess : MonoBehaviour
             if (Regex.IsMatch(collision.transform.tag, "black"))
             {
                 Destroy(collision.gameObject);
-
-                AudioManager.Instance.PlayAuido(KillAuido);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
                 child.transform.SetParent(stat);
-                StatText.text = "slain";
+
             }
                 
         }
-            
-                
+        
+        AudioManager.Instance.PlayAuido(KillAuido);
+        StatText.text = "slain";
+
     }
 
     

@@ -6,44 +6,41 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private Transform dragging ; // 棋子位置
-    private GameController G;
+    Transform dragging ; // 棋子位置
+    public static GameController G;
 
     public static bool turn; // false:紅方 true:黑方
-    private int layermask; // 層
+    int layermask; // 層
 
-    private Vector3 TargetPos; // 目標點擊位置
-    private string target; //  target tag
-    private bool Movable = false; // 能否移動
+    Vector3 TargetPos; // 目標點擊位置
+    string target; //  target tag
+    bool Movable = false; // 能否移動
 
-    private Transform r, b; // 帥 將
+    Transform r, b; // 帥 將
     bool Isend = false; // 判斷帥或將消失
 
     // 起點
-    private int OriginalX = -8;
-    private int OriginalY = -9;
+    int OriginalX = -8;
+    int OriginalY = -9;
 
-    private int x = -9; // 最左
-    private int y = -10; // 最下
-    private int x1 = 2; // x間隔
-    private int y1 = 2; // y間隔
+    int x = -9; // 最左
+    int y = -10; // 最下
+    int x1 = 2; // x間隔
+    int y1 = 2; // y間隔
 
     // Text
-    
-    private Text WhoWinText;
-    private Text RoundText;
-    private Text PressEText;
-    private Text StatText;
+    Text WhoWinText;
+    Text RoundText;
+    Text StatText;
 
 
     // UI btn
-    private GameObject menuplain;
-    private GameObject gamereturn_btn;
+    GameObject gamereturn_btn;
 
-    private int round = 1;
+    int round = 1; // 回合
 
-    private GameObject father;
-    private GameObject child;
+    // 狀態
+    GameObject child;
     public Transform stat;
 
     // Audio
@@ -63,17 +60,14 @@ public class GameController : MonoBehaviour
         RoundText = GameObject.Find("round").GetComponent<Text>(); // 回合文字
         RoundText.text = "第" + round + "回合 - 紅";
 
-        PressEText = GameObject.Find("press_e").GetComponent<Text>(); // Press E
+        StatText = GameObject.Find("stat_txt").GetComponent<Text>(); // 狀態文字
+        StatText.text = "";
+
+        
 
         G = GetComponent<GameController>();
 
         gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
-
-        menuplain = GameObject.Find("menuplain"); // 遊戲菜單
-        menuplain.SetActive(false);
-
-        StatText = GameObject.Find("stat_txt").GetComponent<Text>();
-        
 
         r = GameObject.FindWithTag("red2").transform;
         b = GameObject.FindWithTag("black2").transform;
@@ -82,12 +76,9 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // press E
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            menuplain.SetActive(!menuplain.activeSelf);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        
+        
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Destroy(GameObject.FindWithTag("red2"));
             Isend = true;
@@ -113,12 +104,9 @@ public class GameController : MonoBehaviour
                     WhoWinText.text = "黑方勝 !";
                     break;
             }
-            
 
             gamereturn_btn.SetActive(false);
-            menuplain.SetActive(true);
-            
-            PressEText.text = "";
+            Action.menuplain.SetActive(true);
             
             G.enabled = false;
 
@@ -424,8 +412,7 @@ public class GameController : MonoBehaviour
                         Destroy(stat.GetChild(i).gameObject);
                     }
 
-                    father = GameObject.FindWithTag(target);
-                    child = GameObject.Instantiate(father, new Vector3(-14,6,0), Quaternion.identity) as GameObject;
+                    child = GameObject.Instantiate(GameObject.FindWithTag(target), new Vector3(-14,6,0), Quaternion.identity) as GameObject;
                     child.transform.SetParent(stat);
                     StatText.text = "Move";
 

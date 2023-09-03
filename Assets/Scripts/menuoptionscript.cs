@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
-public class menuoptionscript : MonoBehaviour
+public class Menuoptionscript : MonoBehaviour
 {
-    private GameObject menuplain;
+    
     
 
     // Start is called before the first frame update
     void Start()
     {
 
-        menuplain = GameObject.Find("menuplain");
+        
         
 
     }
@@ -34,7 +34,20 @@ public class menuoptionscript : MonoBehaviour
 
     public void Click_gamereturn()
     {
-        menuplain.SetActive(!menuplain.activeSelf);
+        Action.menuplain.SetActive(!Action.menuplain.activeSelf);
+
+        
+
+        switch (Action.menuplain.activeSelf)
+        {
+            case true:
+                GameController.G.enabled = false;
+                break;
+
+            case false:
+                GameController.G.enabled = true;
+                break;
+        }
     }
 
     public void Click_homereturn()
