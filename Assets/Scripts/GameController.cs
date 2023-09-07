@@ -6,16 +6,19 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    
+
     Transform dragging ; // 棋子位置
-    public static GameController G;
+    public static GameController G; // GameController本身
 
     public static bool turn; // false:紅方 true:黑方
-    int layermask; // 層
 
     Vector3 TargetPos; // 目標點擊位置
     string target; //  target tag
     bool Movable = false; // 能否移動
 
+    public GameObject Arrow_left , Arrow_right;
+    public Transform Focus; // 瞄準
     Transform r, b; // 帥 將
     bool Isend = false; // 判斷帥或將消失
 
@@ -33,18 +36,16 @@ public class GameController : MonoBehaviour
     Text RoundText;
     Text StatText;
 
-
     // UI btn
     GameObject gamereturn_btn;
+    GameObject setting_btn;
+    GameObject reset_btn;
 
     int round = 1; // 回合
 
     // 狀態
     GameObject child;
     public Transform stat;
-
-    // Audio
-    
 
     
 
@@ -53,7 +54,7 @@ public class GameController : MonoBehaviour
     {
         dragging = null;
         turn = false;
-        
+
         WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
         WhoWinText.text = "";
 
@@ -63,11 +64,11 @@ public class GameController : MonoBehaviour
         StatText = GameObject.Find("stat_txt").GetComponent<Text>(); // 狀態文字
         StatText.text = "";
 
-        
-
         G = GetComponent<GameController>();
 
         gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
+        setting_btn = GameObject.Find("Setting_btn"); // 設定按鈕
+        reset_btn = GameObject.Find("reset_btn"); // 重玩按鈕
 
         r = GameObject.FindWithTag("red2").transform;
         b = GameObject.FindWithTag("black2").transform;
@@ -76,7 +77,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -105,7 +105,17 @@ public class GameController : MonoBehaviour
                     break;
             }
 
+
+            
+            Arrow_left.transform.SetParent(reset_btn.transform);
+            Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(reset_btn.transform.localPosition.x + 225, 0, 0);
+
+            
+            Arrow_right.transform.SetParent(reset_btn.transform);
+            Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(reset_btn.transform.localPosition.x - 225, 0, 0);
+
             gamereturn_btn.SetActive(false);
+            setting_btn.SetActive(false);
             Action.menuplain.SetActive(true);
             
             G.enabled = false;
@@ -116,7 +126,7 @@ public class GameController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) // 點擊
         {
-
+            
             RaycastHit2D hit ;
             RaycastHit2D hit2 ;
 
@@ -142,14 +152,28 @@ public class GameController : MonoBehaviour
                  if (Match(hit,turn)) // 判斷誰的回合誰動
                      dragging = hit.transform;
                  target = hit.transform.tag;
-                
+
+                 
+                 if (GameObject.FindWithTag("Focus") == null) // 瞄準target圖案
+                 {
+                     Instantiate(Focus , dragging.position , Quaternion.identity);
+                     Focus = GameObject.FindWithTag("Focus").transform;
+                 }
+                 else
+                 {
+                     Focus.position = dragging.position;
+                 }
+                  
+
             }
             else if (dragging != null)
             {
                 Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 pos.z = 0;
                 int tmp = 0;
-                TargetPos = new Vector3(0,0,0);
+                TargetPos = new Vector3(0 , 0 , 0);
+
+                // 確認有無超出棋盤範圍
                 for (int i = x; i < OriginalX + x1 * 8 ; i += x1)
                 {
                     float xtmp = i + x1;
@@ -180,7 +204,6 @@ public class GameController : MonoBehaviour
 
                     tmp += 1;
                 }
-                
 
                 switch (target)
                 {
@@ -383,13 +406,13 @@ public class GameController : MonoBehaviour
 
 
                     dragging.position = TargetPos;
+                    Focus.position = TargetPos;
 
-                    if(hit2)
+                    if(hit2 && hit2.transform.position == TargetPos) // 播放聲音
                     {
-                        if (hit2.transform.position == TargetPos)
-                        {
-                            AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-                        }
+                        
+                        AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
+                        
                     }
                     else
                     {
@@ -416,11 +439,11 @@ public class GameController : MonoBehaviour
                         
                     }
 
+                    // 狀態父子
                     int index = stat.childCount;
-                    //Debug.Log(index + "\n");
+                    
                     for (int i = index - 1; i >= 0; i--)
                     {
-                        //Debug.Log(stat.GetChild(i).gameObject);
                         Destroy(stat.GetChild(i).gameObject);
                     }
 

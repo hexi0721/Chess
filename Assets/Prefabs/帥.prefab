@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -5637517793375670733}
   - component: {fileID: 430083035698686874}
   - component: {fileID: -2960157171050325071}
-  - component: {fileID: -448968644443048972}
   m_Layer: 3
   m_Name: "\u5E25"
   m_TagString: red2
@@ -145,18 +144,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de2e75b243c427044a6cdd3b980f8fca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KillAuido: {fileID: 8300000, guid: ecb642c8078cb814fb9efb6b2b223cf6, type: 3}
---- !u!114 &-448968644443048972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8875613578798498196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5037b998f5f6dc4fb7a1a9c76b61c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

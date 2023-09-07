@@ -21,6 +21,8 @@ TagManager:
   - black
   - red
   - sound
+  - Arrow
+  - Focus
   layers:
   - Default
   - TransparentFX

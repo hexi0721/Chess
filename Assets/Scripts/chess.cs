@@ -33,9 +33,9 @@ public class chess : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if (GameController.turn == false) // 碰撞檢測 對方是紅方就破壞
+        if (GameController.turn == false) 
         {
-            if (Regex.IsMatch(collision.transform.tag, "red"))
+            if (Regex.IsMatch(collision.transform.tag, "red")) // 碰撞檢測 對方是紅方就破壞
             {
                 Destroy(collision.gameObject);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
@@ -47,7 +47,7 @@ public class chess : MonoBehaviour
         }
         else
         {
-            if (Regex.IsMatch(collision.transform.tag, "black"))
+            if (Regex.IsMatch(collision.transform.tag, "black")) // 碰撞檢測 對方是黑方就破壞
             {
                 Destroy(collision.gameObject);
                 child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
@@ -56,9 +56,7 @@ public class chess : MonoBehaviour
             }
                 
         }
-        
-        //AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-        //AudioManager.Instance.SelectSound(1);
+
         StatText.text = "slain";
 
     }
