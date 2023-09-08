@@ -82,6 +82,11 @@ public class Menuoptionscript : MonoBehaviour
         
     }
 
+    public void Click_PlayReWatch()
+    {
+        ReWatch.Instance.PlayReWatch();
+    }
+
 
     public void Hover_button(GameObject G)
     {

@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    
-
     Transform dragging ; // 棋子位置
     public static GameController G; // GameController本身
 
@@ -18,7 +16,7 @@ public class GameController : MonoBehaviour
     bool Movable = false; // 能否移動
 
     public GameObject Arrow_left , Arrow_right;
-    public Transform Focus; // 瞄準
+    public GameObject Focus ; // 瞄準
     Transform r, b; // 帥 將
     bool Isend = false; // 判斷帥或將消失
 
@@ -47,7 +45,7 @@ public class GameController : MonoBehaviour
     GameObject child;
     public Transform stat;
 
-    
+    GameObject FocusTmp = null;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +70,8 @@ public class GameController : MonoBehaviour
 
         r = GameObject.FindWithTag("red2").transform;
         b = GameObject.FindWithTag("black2").transform;
+
+        
     }
 
     // Update is called once per frame
@@ -121,9 +121,9 @@ public class GameController : MonoBehaviour
             G.enabled = false;
 
         }
-        
-       
 
+
+        
         if (Input.GetMouseButtonDown(0)) // 點擊
         {
             
@@ -156,12 +156,15 @@ public class GameController : MonoBehaviour
                  
                  if (GameObject.FindWithTag("Focus") == null) // 瞄準target圖案
                  {
+                    Debug.Log(1);
                      Instantiate(Focus , dragging.position , Quaternion.identity);
-                     Focus = GameObject.FindWithTag("Focus").transform;
+                     FocusTmp = GameObject.FindGameObjectWithTag("Focus");
+                     
                  }
                  else
                  {
-                     Focus.position = dragging.position;
+                    Debug.Log(2);
+                    FocusTmp.transform.position = dragging.position;
                  }
                   
 
@@ -400,13 +403,18 @@ public class GameController : MonoBehaviour
                     Isend = true;
                 }
 
+                
+
                 //判斷是否超出棋盤
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
 
+                    ReWatch.Instance.Chess_Tran.Add(dragging);
+                    ReWatch.Instance.OriginalLocation.Add(dragging.position);
+                    ReWatch.Instance.Destination.Add(TargetPos);
 
                     dragging.position = TargetPos;
-                    Focus.position = TargetPos;
+                    FocusTmp.transform.position = TargetPos;
 
                     if(hit2 && hit2.transform.position == TargetPos) // 播放聲音
                     {
@@ -451,14 +459,20 @@ public class GameController : MonoBehaviour
                     child.transform.SetParent(stat);
                     StatText.text = "Move";
 
-
+                    
                 }
+                else
+                {
+                    Destroy(FocusTmp);
+                }
+
 
                 
                 dragging = null;
                 
 
             }
+            
 
         }
 
@@ -678,7 +692,7 @@ public class GameController : MonoBehaviour
                 if (hit && hit.transform.position.x >= pos.x)
                 {
 
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -696,7 +710,7 @@ public class GameController : MonoBehaviour
                 if (hit && hit.transform.position.x <= pos.x)
                 {
 
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -716,7 +730,7 @@ public class GameController : MonoBehaviour
                 if (hit && hit.transform.position.y <= pos.y)
                 {
 
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
                     {
                         return true;
                     }
@@ -735,7 +749,7 @@ public class GameController : MonoBehaviour
                 if (hit && hit.transform.position.y >= pos.y)
                 {
 
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && TargetPos == hit3.transform.position)
+                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
                     {
                         return true;
                     }

@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 133833464}
   - component: {fileID: 133833465}
   - component: {fileID: 133833468}
+  - component: {fileID: 133833469}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Arrow_left: {fileID: 1097206531}
   Arrow_right: {fileID: 1018583185}
-  Focus: {fileID: 8634702447170334760, guid: 9e0700799c9158e468bdf5432314f8f7, type: 3}
+  Focus: {fileID: 8634702447170334762, guid: 9e0700799c9158e468bdf5432314f8f7, type: 3}
   stat: {fileID: 2124798564}
 --- !u!114 &133833468
 MonoBehaviour:
@@ -317,6 +318,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48162950673503748b1eed8bdac90ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133833469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133833462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635d73750098d4b42b7f5450d6886f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &312608757
@@ -2110,7 +2123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5037b998f5f6dc4fb7a1a9c76b61c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleBGM: {fileID: 0}
+  TitleBGM: {fileID: 2448553787741484788, guid: 95035e7ad21a52b40b05e1dc8f9f9b6b, type: 3}
   Arrow_left: {fileID: 1097206531}
   Arrow_right: {fileID: 1018583185}
 --- !u!1 &2065758152
