@@ -5,7 +5,17 @@ using System.Text.RegularExpressions;
 
 public class MapController : MonoBehaviour
 {
-    
+    static MapController _instance;
+
+    public static MapController Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+
     public GameObject board;
     
     public Transform RedChess;
@@ -22,9 +32,18 @@ public class MapController : MonoBehaviour
 
     GameObject child;
     Vector3 pos;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        pos = new Vector3(0, 0, 0);
+        Instantiation(board, pos); // 生成地圖
+
         initMap();
     }
 
@@ -34,12 +53,9 @@ public class MapController : MonoBehaviour
         
     }
 
-    private void initMap()
+    public void initMap()
     {
         
-
-        pos = new Vector3(0, 0 ,0);
-        Instantiation(board , pos); // 生成地圖
 
 
         if (GameObject.Find("GameManager"))
@@ -140,7 +156,7 @@ public class MapController : MonoBehaviour
     }
 
 
-    private void ChangeScale(GameObject G , bool Flip) // 改變大小 轉向 設置層
+    public void ChangeScale(GameObject G , bool Flip) // 改變大小 轉向 設置層
     {
         int layer;
         G.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -161,7 +177,7 @@ public class MapController : MonoBehaviour
                 
     }
 
-    private void Instantiation(GameObject G, Vector3 pos) // 生成棋子
+    public void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
 
@@ -178,6 +194,21 @@ public class MapController : MonoBehaviour
         }
             
 
+    }
+
+    public void DestroyAll()
+    {
+        for (int i = RedChess.childCount - 1; i >= 0; i--)
+        {
+            Destroy(RedChess.GetChild(i).gameObject);
+            
+        }
+
+        for (int i = BlackChess.childCount - 1; i >= 0; i--)
+        {
+            Destroy(BlackChess.GetChild(i).gameObject);
+
+        }
     }
 
 

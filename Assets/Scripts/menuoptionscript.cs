@@ -50,9 +50,9 @@ public class Menuoptionscript : MonoBehaviour
     public void Click_gamereturn()
     {
         AudioManager.Instance.PlayAuido(AudioManager.Instance.ReturnAudio);
-        Action.menuplain.SetActive(!Action.menuplain.activeSelf);
+        Action.Instance.menuplain.SetActive(!Action.Instance.menuplain.activeSelf);
 
-        switch (Action.menuplain.activeSelf)
+        switch (Action.Instance.menuplain.activeSelf)
         {
             case true:
                 GameController.G.enabled = false;

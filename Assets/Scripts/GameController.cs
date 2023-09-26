@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     public GameObject Arrow_left , Arrow_right;
     public GameObject Focus ; // 瞄準
     Transform r, b; // 帥 將
-    bool Isend = false; // 判斷帥或將消失
+    public static bool Isend ; // 判斷帥或將消失
 
     // 起點
     int OriginalX = -8;
@@ -28,16 +28,6 @@ public class GameController : MonoBehaviour
     int y = -10; // 最下
     int x1 = 2; // x間隔
     int y1 = 2; // y間隔
-
-    // Text
-    Text WhoWinText;
-    Text RoundText;
-    Text StatText;
-
-    // UI btn
-    GameObject gamereturn_btn;
-    GameObject setting_btn;
-    GameObject reset_btn;
 
     int round = 1; // 回合
 
@@ -50,28 +40,16 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Isend = false;
         dragging = null;
         turn = false;
 
-        WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
-        WhoWinText.text = "";
-
-        RoundText = GameObject.Find("round").GetComponent<Text>(); // 回合文字
-        RoundText.text = "第" + round + "回合 - 紅";
-
-        StatText = GameObject.Find("stat_txt").GetComponent<Text>(); // 狀態文字
-        StatText.text = "";
 
         G = GetComponent<GameController>();
-
-        gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
-        setting_btn = GameObject.Find("Setting_btn"); // 設定按鈕
-        reset_btn = GameObject.Find("reset_btn"); // 重玩按鈕
 
         r = GameObject.FindWithTag("red2").transform;
         b = GameObject.FindWithTag("black2").transform;
 
-        
     }
 
     // Update is called once per frame
@@ -97,26 +75,27 @@ public class GameController : MonoBehaviour
             switch(turn)
             {
                 case true:
-                    WhoWinText.text = "紅方勝 !";
+                    Action.Instance.WhoWinText.text = "紅方勝 !";
                     break;
 
                 case false:
-                    WhoWinText.text = "黑方勝 !";
+                    Action.Instance.WhoWinText.text = "黑方勝 !";
                     break;
             }
 
 
             
-            Arrow_left.transform.SetParent(reset_btn.transform);
-            Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(reset_btn.transform.localPosition.x + 225, 0, 0);
+            Arrow_left.transform.SetParent(Action.Instance.reset_btn.transform);
+            Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(Action.Instance.reset_btn.transform.localPosition.x + 225, 0, 0);
 
             
-            Arrow_right.transform.SetParent(reset_btn.transform);
-            Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(reset_btn.transform.localPosition.x - 225, 0, 0);
+            Arrow_right.transform.SetParent(Action.Instance.reset_btn.transform);
+            Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(Action.Instance.reset_btn.transform.localPosition.x - 225, 0, 0);
 
-            gamereturn_btn.SetActive(false);
-            setting_btn.SetActive(false);
-            Action.menuplain.SetActive(true);
+            Action.Instance.gamereturn_btn.SetActive(false);
+            Action.Instance.setting_btn.SetActive(false);
+            Action.Instance.menuplain.SetActive(true);
+            Action.Instance.replay.SetActive(true);
             
             G.enabled = false;
 
@@ -156,14 +135,14 @@ public class GameController : MonoBehaviour
                  
                  if (GameObject.FindWithTag("Focus") == null) // 瞄準target圖案
                  {
-                    Debug.Log(1);
+                    
                      Instantiate(Focus , dragging.position , Quaternion.identity);
                      FocusTmp = GameObject.FindGameObjectWithTag("Focus");
                      
                  }
                  else
                  {
-                    Debug.Log(2);
+                    
                     FocusTmp.transform.position = dragging.position;
                  }
                   
@@ -435,11 +414,11 @@ public class GameController : MonoBehaviour
                         switch (turn)
                         {
                             case false:
-                                RoundText.text = "第" + round + "回合 - 紅";
+                                Action.Instance.RoundText.text = "第" + round + "回合 - 紅";
                                 break;
 
                             case true:
-                                RoundText.text = "第" + round + "回合 - 黑";
+                                Action.Instance.RoundText.text = "第" + round + "回合 - 黑";
                                 round += 1;
                                 break;
                         }
@@ -457,7 +436,7 @@ public class GameController : MonoBehaviour
 
                     child = GameObject.Instantiate(GameObject.FindWithTag(target), new Vector3(-14,6,0), Quaternion.identity) as GameObject;
                     child.transform.SetParent(stat);
-                    StatText.text = "Move";
+                    Action.Instance.StatText.text = "Move";
 
                     
                 }
