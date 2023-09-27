@@ -15,7 +15,7 @@ public class ReWatch : MonoBehaviour
         }
     }
 
-    bool Isplay = false;
+    public bool Isplay = false;
 
     public List<Transform> Chess_Tran = new List<Transform>(); // 要移動的棋子
     public List<Vector3> OriginalLocation = new List<Vector3>(); // 棋子原本位置
@@ -48,6 +48,10 @@ public class ReWatch : MonoBehaviour
         MapController.Instance.initMap();
 
         Action.Instance.menuplain.SetActive(false);
+        Action.Instance.replay_btn.SetActive(false);
+
+        Action.Instance.setting_btn.SetActive(true);
+        Action.Instance.replay.SetActive(true);
 
         Action.Instance.WhoWinText.text = "";
 
@@ -62,12 +66,13 @@ public class ReWatch : MonoBehaviour
         {
             for (int i = 0; i < Chess_Tran.Count; i++)
             {
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(OriginalLocation[i]), Vector3.zero,
+                RaycastHit2D hit = Physics2D.Raycast(OriginalLocation[i], Vector3.zero,
                 Mathf.Infinity );
 
                 if (hit)
                 {
                     hit.transform.position = Destination[i];
+                    Debug.Log(hit);
                 }
                 
 

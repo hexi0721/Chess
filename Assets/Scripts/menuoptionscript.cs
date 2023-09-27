@@ -52,16 +52,23 @@ public class Menuoptionscript : MonoBehaviour
         AudioManager.Instance.PlayAuido(AudioManager.Instance.ReturnAudio);
         Action.Instance.menuplain.SetActive(!Action.Instance.menuplain.activeSelf);
 
-        switch (Action.Instance.menuplain.activeSelf)
+        if (!ReWatch.Instance.Isplay)
         {
-            case true:
-                GameController.G.enabled = false;
-                break;
+            Action.Instance.replay_btn.SetActive(false);
+            switch (Action.Instance.menuplain.activeSelf)
+            {
+                case true:
+                    GameController.G.enabled = false;
+                    break;
 
-            case false:
-                GameController.G.enabled = true;
-                break;
+                case false:
+                    GameController.G.enabled = true;
+                    break;
+            }
         }
+        
+
+        
     }
 
     public void Click_homereturn()
@@ -85,6 +92,16 @@ public class Menuoptionscript : MonoBehaviour
     public void Click_PlayReWatch()
     {
         ReWatch.Instance.PlayReWatch();
+    }
+
+    public void Click_Next()
+    {
+
+    }
+
+    public void Click_Last()
+    {
+
     }
 
 

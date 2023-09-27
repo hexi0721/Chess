@@ -95,7 +95,7 @@ public class GameController : MonoBehaviour
             Action.Instance.gamereturn_btn.SetActive(false);
             Action.Instance.setting_btn.SetActive(false);
             Action.Instance.menuplain.SetActive(true);
-            Action.Instance.replay.SetActive(true);
+            
             
             G.enabled = false;
 

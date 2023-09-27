@@ -16,14 +16,15 @@ public class Action : MonoBehaviour
         }
     }
 
-
+    public GameObject replay;
 
     // UI btn
     public GameObject menuplain;
     public GameObject gamereturn_btn;
     public GameObject setting_btn;
     public GameObject reset_btn;
-    public GameObject replay;
+    public GameObject replay_btn;
+
 
     // Text
     public Text WhoWinText;
@@ -40,11 +41,16 @@ public class Action : MonoBehaviour
     void Start()
     {
         menuplain = GameObject.Find("menuplain");
+        
+
         gamereturn_btn = GameObject.Find("gamereturn_btn"); // 重新開始按鈕
         setting_btn = GameObject.Find("Setting_btn"); // 設定按鈕
         reset_btn = GameObject.Find("reset_btn"); // 重玩按鈕
         replay = GameObject.Find("Replay"); // 重新播放上一局
-        menuplain.SetActive(false);
+        replay_btn = GameObject.Find("replay_btn");
+
+        menuplain.SetActive(false); // 順序不可往上移動
+        replay.SetActive(false);
 
         WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
         WhoWinText.text = "";
@@ -63,6 +69,7 @@ public class Action : MonoBehaviour
         {
             menuplain.SetActive(!menuplain.activeSelf);
             replay.SetActive(false);
+            replay_btn.SetActive(false);
             switch (menuplain.activeSelf)
             {
                 case true:
