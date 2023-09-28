@@ -26,9 +26,7 @@ public class Menuoptionscript : MonoBehaviour
             Instantiate(TitleBGM);
         }
         
-        
 
-        
         
     }
 
@@ -41,18 +39,12 @@ public class Menuoptionscript : MonoBehaviour
 
     }
 
-    public void Click_reset()
-    {
-        AudioManager.Instance.PlayAuido(AudioManager.Instance.RestartAudio);
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
-    }
-
     public void Click_gamereturn()
     {
         AudioManager.Instance.PlayAuido(AudioManager.Instance.ReturnAudio);
         Action.Instance.menuplain.SetActive(!Action.Instance.menuplain.activeSelf);
 
-        if (!ReWatch.Instance.Isplay)
+        if (!Replay.Instance.Isplay)
         {
             Action.Instance.replay_btn.SetActive(false);
             switch (Action.Instance.menuplain.activeSelf)
@@ -91,17 +83,7 @@ public class Menuoptionscript : MonoBehaviour
 
     public void Click_PlayReWatch()
     {
-        ReWatch.Instance.PlayReWatch();
-    }
-
-    public void Click_Next()
-    {
-
-    }
-
-    public void Click_Last()
-    {
-
+        Replay.Instance.PlayReWatch();
     }
 
 

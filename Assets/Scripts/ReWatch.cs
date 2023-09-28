@@ -5,81 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class ReWatch : MonoBehaviour
 {
-    static ReWatch _instance;
-
-    public static ReWatch Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-
-    public bool Isplay = false;
-
-    public List<Transform> Chess_Tran = new List<Transform>(); // 要移動的棋子
-    public List<Vector3> OriginalLocation = new List<Vector3>(); // 棋子原本位置
-    public List<Vector3> Destination = new List<Vector3>(); // 移動棋子移動位置
-
     
-
-
-    private void Awake()
+    public void RePlay_Next()
     {
-        _instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        RePlay();
-    }
-
-    public void PlayReWatch()
-    {
-
-        MapController.Instance.DestroyAll();
-        MapController.Instance.initMap();
-
-        Action.Instance.menuplain.SetActive(false);
-        Action.Instance.replay_btn.SetActive(false);
-
-        Action.Instance.setting_btn.SetActive(true);
-        Action.Instance.replay.SetActive(true);
-
-        Action.Instance.WhoWinText.text = "";
-
-        Isplay = true;
-
+        
+        Replay.Instance.Next();
+        
         
     }
 
-    private void RePlay()
+    public void RePlay_Last()
     {
-        if(Isplay == true)
-        {
-            for (int i = 0; i < Chess_Tran.Count; i++)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(OriginalLocation[i], Vector3.zero,
-                Mathf.Infinity );
-
-                if (hit)
-                {
-                    hit.transform.position = Destination[i];
-                    Debug.Log(hit);
-                }
-                
-
-
-            }
-        }
+        
+        Replay.Instance.Last();
+        
+        
     }
+
 
 
 }

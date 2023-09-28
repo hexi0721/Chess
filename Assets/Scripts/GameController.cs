@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
 
     Vector3 TargetPos; // 目標點擊位置
     string target; //  target tag
-    bool Movable = false; // 能否移動
+    bool Movable; // 能否移動
 
     public GameObject Arrow_left , Arrow_right;
     public GameObject Focus ; // 瞄準
@@ -29,21 +29,23 @@ public class GameController : MonoBehaviour
     int x1 = 2; // x間隔
     int y1 = 2; // y間隔
 
-    int round = 1; // 回合
+    int round; // 回合
 
     // 狀態
     GameObject child;
     public Transform stat;
 
-    GameObject FocusTmp = null;
+    GameObject FocusTmp ;
 
     // Start is called before the first frame update
     void Start()
     {
+        round = 1;
         Isend = false;
         dragging = null;
         turn = false;
-
+        FocusTmp = null;
+        Movable = false;
 
         G = GetComponent<GameController>();
 
@@ -94,9 +96,10 @@ public class GameController : MonoBehaviour
 
             Action.Instance.gamereturn_btn.SetActive(false);
             Action.Instance.setting_btn.SetActive(false);
+            Action.Instance.replay_btn.SetActive(true);
             Action.Instance.menuplain.SetActive(true);
             
-            
+
             G.enabled = false;
 
         }
@@ -388,9 +391,9 @@ public class GameController : MonoBehaviour
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
 
-                    ReWatch.Instance.Chess_Tran.Add(dragging);
-                    ReWatch.Instance.OriginalLocation.Add(dragging.position);
-                    ReWatch.Instance.Destination.Add(TargetPos);
+                    Replay.Instance.Chess_Tran.Add(dragging);
+                    Replay.Instance.OriginalLocation.Add(dragging.position);
+                    Replay.Instance.Destination.Add(TargetPos);
 
                     dragging.position = TargetPos;
                     FocusTmp.transform.position = TargetPos;
@@ -399,11 +402,12 @@ public class GameController : MonoBehaviour
                     {
                         
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-                        
+                        Replay.Instance.isCollision.Add(true);
                     }
                     else
                     {
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
+                        Replay.Instance.isCollision.Add(false);
                     }
 
                     turn = !turn; // 改變回合

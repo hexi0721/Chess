@@ -10,14 +10,14 @@ public class chess : MonoBehaviour
     Transform stat;
     GameObject child;
 
-    Text StatText;
-
+    
+    
     
 
     // Start is called before the first frame update
     void Start()
     {
-        StatText = GameObject.Find("stat_txt").GetComponent<Text>();
+        
         stat = GameObject.Find("stat").transform;
 
     }
@@ -25,39 +25,74 @@ public class chess : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+        
 
 
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if (GameController.turn == false) 
+        if (!Replay.Instance.Isplay)
         {
-            if (Regex.IsMatch(collision.transform.tag, "red")) // 碰撞檢測 對方是紅方就破壞
+            if (GameController.turn == false)
             {
-                Destroy(collision.gameObject);
-                child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
-                child.transform.SetParent(stat);
+                if (Regex.IsMatch(collision.transform.tag, "red")) // 碰撞檢測 對方是紅方就破壞
+                {
+
+                    Destroy(collision.gameObject);
+                    child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
+                    child.transform.SetParent(stat);
 
 
-            }
+                }
                 
+            }
+            else
+            {
+                if (Regex.IsMatch(collision.transform.tag, "black")) // 碰撞檢測 對方是黑方就破壞
+                {
+                    Destroy(collision.gameObject);
+                    child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
+                    child.transform.SetParent(stat);
+
+                }
+                
+            }
+
+            Action.Instance.StatText.text = "slain";
         }
         else
         {
-            if (Regex.IsMatch(collision.transform.tag, "black")) // 碰撞檢測 對方是黑方就破壞
+            if (Replay.Instance.turn == false)
             {
-                Destroy(collision.gameObject);
-                child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
-                child.transform.SetParent(stat);
+                if (Regex.IsMatch(collision.transform.tag, "red")) // 碰撞檢測 對方是紅方就破壞
+                {
+                    Replay.Instance.Revive_Chess.Add(collision.gameObject);
+                    collision.gameObject.SetActive(false);
+                    
+                    
+
+
+                }
 
             }
-                
-        }
+            else
+            {
+                if (Regex.IsMatch(collision.transform.tag, "black")) // 碰撞檢測 對方是黑方就破壞
+                {
+                    Replay.Instance.Revive_Chess.Add(collision.gameObject);
+                    collision.gameObject.SetActive(false);
+                    
+                    
+                }
 
-        StatText.text = "slain";
+            }
+
+            
+
+            
+        }
+        
 
     }
 
