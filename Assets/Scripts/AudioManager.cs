@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     static AudioManager _instance;
 
-    public AudioClip RestartAudio, ReturnAudio, QuitAudio , MoveAudio , KillAudio;
+    public AudioClip RestartAudio, ReturnAudio, QuitAudio , MoveAudio , KillAudio , CheckMateAudio;
 
     
 
@@ -66,7 +66,9 @@ public class AudioManager : MonoBehaviour
                 efxsource.volume = 0.7f;
                 break;
 
-
+            case "CheckMateAudio":
+                efxsource.volume = 0.7f;
+                break;
 
 
         }

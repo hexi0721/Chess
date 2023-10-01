@@ -146,5 +146,5 @@ MonoBehaviour:
   QuitAudio: {fileID: 8300000, guid: 45dd760e7266b434688409fe32085836, type: 3}
   MoveAudio: {fileID: 8300000, guid: 6519c7433ed46574ea0da523f6c0ce3a, type: 3}
   KillAudio: {fileID: 8300000, guid: ecb642c8078cb814fb9efb6b2b223cf6, type: 3}
-  soundtmp: 0
+  CheckMateAudio: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   efxsource: {fileID: 2448553787741484786}

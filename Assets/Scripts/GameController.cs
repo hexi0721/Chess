@@ -85,12 +85,9 @@ public class GameController : MonoBehaviour
                     break;
             }
 
-
-            
             Arrow_left.transform.SetParent(Action.Instance.reset_btn.transform);
             Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(Action.Instance.reset_btn.transform.localPosition.x + 225, 0, 0);
 
-            
             Arrow_right.transform.SetParent(Action.Instance.reset_btn.transform);
             Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(Action.Instance.reset_btn.transform.localPosition.x - 225, 0, 0);
 
@@ -99,13 +96,12 @@ public class GameController : MonoBehaviour
             Action.Instance.replay_btn.SetActive(true);
             Action.Instance.menuplain.SetActive(true);
             
-
             G.enabled = false;
 
         }
 
-
         
+
         if (Input.GetMouseButtonDown(0)) // 點擊
         {
             
@@ -128,6 +124,8 @@ public class GameController : MonoBehaviour
                 hit2 = redhit;
             }
 
+            
+
             if (hit)
             {
 
@@ -145,7 +143,6 @@ public class GameController : MonoBehaviour
                  }
                  else
                  {
-                    
                     FocusTmp.transform.position = dragging.position;
                  }
                   
@@ -165,9 +162,7 @@ public class GameController : MonoBehaviour
                     
                     if((pos.x > i) && (pos.x < xtmp))
                     {
-                        
                         TargetPos.x = OriginalX + tmp * x1;
-                        //Debug.Log("x " + TargetPos.x);
                         break;
                         
                     }
@@ -181,215 +176,25 @@ public class GameController : MonoBehaviour
                     
                     if ((pos.y > j) && (pos.y < ytmp))
                     {
-                        
                         TargetPos.y = OriginalY + tmp * y1;
-                        //Debug.Log("y " + TargetPos.y);
                         break;
                     }
 
                     tmp += 1;
                 }
 
-                switch (target)
-                {
-                    // 紅兵走法
-                    case "red1": 
+                Movable = IsTargetCanMove(target , dragging, TargetPos);
 
-                        if (dragging.position.y < 0)
-                        {
-                            
-                            if ((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x))
-                            {
-                                Movable = true;
-                            }
-                        }
-                        else if (dragging.position.y > 0)
-                        {
-                            
-                            if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) || 
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y) ))
-                            {
-                                Movable = true;
-                            }
-                        }
-
-                        break;
-
-                    // 黑卒走法
-                    case "black1": 
-
-                        if (dragging.position.y > 0)
-                        {
-
-                            if ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x))
-                            {
-                                Movable = true;
-                            }
-                        }
-                        else if (dragging.position.y < 0)
-                        {
-
-                            if (((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) || 
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
-                            {
-                                Movable = true;
-                            }
-                        }
-
-                        break;
-
-                    // 紅帥走法
-                    case "red2": 
-
-                        hit = Physics2D.Raycast(dragging.position+new Vector3(0,1,0) , Vector2.up,
-                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-
-                        if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
-                        {
-                            if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
-                                ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
-                            {
-                                Movable = true;
-                            }
-                        }
-                        else if(hit.transform.tag == "black2")
-                        {
-                            
-                            Movable = true;
-                        }
-
-
-                        break;
-
-                    // 黑將走法
-                    case "black2": 
-
-                        
-                        hit = Physics2D.Raycast(dragging.position - new Vector3(0, 1, 0), Vector2.down,
-                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-                        
-
-                        if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
-                        {
-                            if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
-                                ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
-                            {
-                                Movable = true;
-                            }
-                        }
-                        else if (hit.transform.tag == "red2")
-                        {
-
-                            Movable = true;
-                        }
-
-                        break;
-
-                    // 紅相走法
-                    case "red3": 
-
-
-                        if (TargetPos.y < 0)
-                        {
-                            Movable = Chess3CanMove(TargetPos, dragging.position);
-                            
-                        }
-
-
-                        break;
-
-                    // 黑象走法
-                    case "black3": 
-
-                        if (TargetPos.y > 0)
-                        {
-                            Movable = Chess3CanMove(TargetPos, dragging.position);
-                            
-                        }
-
-                        break;
-
-
-                    case "red4": // 馬
-                    case "black4":
-
-                        Movable = Chess4CanMove(TargetPos , dragging.position);
-
-
-                        break;
-
-                    case "red5": // 炮
-                    case "black5":
-
-                        Movable = Chess5CanMove(TargetPos, dragging.position);
-
-                        break;
-
-                    // 車走法
-                    case "red6": 
-                    case "black6":
-
-                        if ((TargetPos.x == dragging.position.x) || (TargetPos.y == dragging.position.y))
-                        {
-                            Movable = true;
-                        }
-
-
-                        break;
-
-                    // 紅仕走法
-                    case "red7": 
-
-                        if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
-                        {
-                            if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
-                                ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
-                            {
-                                Movable = true;
-                            }
-                        }
-
-                        break;
-
-                    // 黑士走法
-                    case "black7": 
-
-                        if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
-                        {
-                            if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
-                                ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
-                                ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
-                                ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
-                            {
-                                Movable = true;
-                            }
-                        }
-
-                        break;
-
-                }
-
-                // 判斷帥或將是否被吃
-                if (TargetPos == b.transform.position || TargetPos == r.transform.position)
-                {
-                    Isend = true;
-                }
-
-                
 
                 //判斷是否超出棋盤
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
+
+                    // 判斷帥或將是否被吃
+                    if (TargetPos == b.transform.position || TargetPos == r.transform.position)
+                    {
+                        Isend = true;
+                    }
 
                     Replay.Instance.Chess_Tran.Add(dragging);
                     Replay.Instance.OriginalLocation.Add(dragging.position);
@@ -398,17 +203,46 @@ public class GameController : MonoBehaviour
                     dragging.position = TargetPos;
                     FocusTmp.transform.position = TargetPos;
 
-                    if(hit2 && hit2.transform.position == TargetPos) // 播放聲音
+                    bool ischeckmate = false;
+                    if(turn == false)
                     {
-                        
-                        AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-                        Replay.Instance.isCollision.Add(true);
+                        if (IsTargetCanMove(target, dragging, b.transform.position))
+                        {
+                            Debug.Log("紅方將軍");
+                            ischeckmate = true;
+                        }
                     }
                     else
                     {
-                        AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
-                        Replay.Instance.isCollision.Add(false);
+                        if (IsTargetCanMove(target, dragging, r.transform.position))
+                        {
+                            Debug.Log("黑方將軍");
+                            ischeckmate = true;
+                        }
                     }
+
+                    if (!ischeckmate)
+                    {
+                        if (hit2 && hit2.transform.position == TargetPos) // 播放聲音
+                        {
+
+                            AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
+                            Replay.Instance.isCollision.Add(true);
+                        }
+                        else
+                        {
+                            AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
+                            Replay.Instance.isCollision.Add(false);
+                        }
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
+                    }
+                    
+
+                    
+                    
 
                     turn = !turn; // 改變回合
                     Movable = false;
@@ -427,7 +261,6 @@ public class GameController : MonoBehaviour
                                 break;
                         }
 
-                        
                     }
 
                     // 狀態父子
@@ -442,22 +275,25 @@ public class GameController : MonoBehaviour
                     child.transform.SetParent(stat);
                     Action.Instance.StatText.text = "Move";
 
-                    
                 }
                 else
                 {
                     Destroy(FocusTmp);
                 }
 
-
                 
+
                 dragging = null;
                 
 
+
             }
+
             
 
         }
+
+        
 
     }
 
@@ -534,9 +370,7 @@ public class GameController : MonoBehaviour
 
                 break;
 
-                
         }
-
 
         return true;
 
@@ -581,10 +415,7 @@ public class GameController : MonoBehaviour
                 
                 if(hit && (hit.transform.position.x == d.x + 2))
                 {
-                    
-                    
                     return true;
-                    
                 }
                     
 
@@ -594,10 +425,7 @@ public class GameController : MonoBehaviour
 
                 if(hit && (hit.transform.position.x == d.x - 2))
                 {
-                    
-                    
                     return true;
-                    
                 }
                 
 
@@ -607,10 +435,7 @@ public class GameController : MonoBehaviour
 
                 if(hit && (hit.transform.position.y == d.y + 2))
                 {
-                    
-                    
                     return true;
-                    
                 }
                 
 
@@ -620,10 +445,7 @@ public class GameController : MonoBehaviour
 
                 if(hit && (hit.transform.position.y == d.y - 2))
                 {
-                    
-                    
                     return true;
-                    
                 }
                 
 
@@ -636,20 +458,20 @@ public class GameController : MonoBehaviour
     // 炮砲走法函數
     private bool Chess5CanMove(Vector3 Tpos , Vector3 pos)
     {
-        if ((Tpos.x == pos.x) || (Tpos.y == pos.y))
+        
+            
+        if ((Tpos.x < pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.left, Vector3.right, "Left")) ||
+            (Tpos.x > pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.right, Vector3.left, "Right")) ||
+            (Tpos.y > pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.up, Vector3.down, "Up")) ||
+            (Tpos.y < pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.down, Vector3.up, "Down")))
         {
-            if ((Tpos.x <= pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.left, Vector3.right, "Left")) ||
-                (Tpos.x >= pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.right, Vector3.left, "Right")) ||
-                (Tpos.y >= pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.up, Vector3.down, "Up")) ||
-                (Tpos.y <= pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.down, Vector3.up, "Down")))
-            {
-
-                 return true;
+            
+            return true;
                 
-            }
-
         }
 
+        
+        
         return false;
     }
 
@@ -658,31 +480,20 @@ public class GameController : MonoBehaviour
     {   // 原點
         RaycastHit2D hit = Physics2D.Raycast(d + v1, v1 ,
                                             Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-        // 點擊目標
+
+        // 目標向哪方發出射線
         RaycastHit2D hit2 = Physics2D.Raycast(pos + v2, v2,
                         Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         
-        // 點擊位置
-        RaycastHit2D hit3 = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.zero,
-                        Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-
         switch (s)
         {
 
             case "Left":
 
+
                 if (hit && hit.transform.position.x >= pos.x)
                 {
-
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return chess5iner(pos);
 
                 }
 
@@ -692,15 +503,7 @@ public class GameController : MonoBehaviour
 
                 if (hit && hit.transform.position.x <= pos.x)
                 {
-
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return chess5iner(pos);
 
                 }
 
@@ -710,36 +513,21 @@ public class GameController : MonoBehaviour
 
             case "Up":
 
+                
                 if (hit && hit.transform.position.y <= pos.y)
                 {
-
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return chess5iner(pos);
 
                 }
                 
-
+      
                 break;
 
             case "Down":
 
                 if (hit && hit.transform.position.y >= pos.y)
                 {
-
-                    if (hit2 && hit.transform.position == hit2.transform.position && hit3 && pos == hit3.transform.position)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return chess5iner(pos);
 
                 }
 
@@ -747,12 +535,255 @@ public class GameController : MonoBehaviour
 
         }
 
-
+        
         return true;
+
+
+        bool chess5iner(Vector3 pos)
+        {
+            // 點擊位置
+            RaycastHit2D hit3 = Physics2D.Raycast(pos, Vector3.zero,
+                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+
+            Debug.Log(hit.transform.name);
+            Debug.Log(hit2.transform.name);
+            Debug.Log(hit3.transform.name);
+            if (hit3 && hit2 && hit.transform.position == hit2.transform.position && hit.transform.position != hit3.transform.position && hit2.transform.position != hit3.transform.position )
+            {
+                Debug.Log(2);
+                return true;
+            }
+            else
+            {
+                Debug.Log(3);
+                return false;
+            }
+        }
 
     }
 
 
+    private bool IsTargetCanMove(string target , Transform dragging , Vector3 TargetPos)
+    {
+        RaycastHit2D hit ; 
+        switch (target)
+        {
+            // 紅兵走法
+            case "red1":
 
+                if (dragging.position.y < 0)
+                {
+
+                    if ((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x))
+                    {
+                        return true;
+                    }
+                }
+                else if (dragging.position.y > 0)
+                {
+
+                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    {
+                        return true;
+                    }
+                }
+
+                break;
+
+            // 黑卒走法
+            case "black1":
+
+                if (dragging.position.y > 0)
+                {
+
+                    if ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x))
+                    {
+                        return true;
+                    }
+                }
+                else if (dragging.position.y < 0)
+                {
+
+                    if (((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    {
+                        return true;
+                    }
+                }
+
+                break;
+
+            // 紅帥走法
+            case "red2":
+
+                hit = Physics2D.Raycast(dragging.position + new Vector3(0, 1, 0), Vector2.up,
+                                    Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+
+
+                if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
+                {
+                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    {
+                        return true;
+                    }
+                }
+                else if (hit.transform.tag == "black2")
+                {
+
+                    return true;
+                }
+
+
+                break;
+
+            // 黑將走法
+            case "black2":
+
+
+                hit = Physics2D.Raycast(dragging.position - new Vector3(0, 1, 0), Vector2.down,
+                                    Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+
+
+
+                if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
+                {
+                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    {
+                        return true;
+                    }
+                }
+                else if (hit.transform.tag == "red2")
+                {
+
+                    return true;
+                }
+
+                break;
+
+            // 紅相走法
+            case "red3":
+
+
+                if (TargetPos.y < 0)
+                {
+                    Movable = Chess3CanMove(TargetPos, dragging.position);
+                    return Movable;
+                }
+
+                break;
+
+
+            // 黑象走法
+            case "black3":
+
+                if (TargetPos.y > 0)
+                {
+                    Movable = Chess3CanMove(TargetPos, dragging.position);
+                    return Movable;
+                }
+
+                break;
+
+
+            case "red4": // 馬
+            case "black4":
+
+                Movable = Chess4CanMove(TargetPos, dragging.position);
+                return Movable;
+
+                
+
+            case "red5": // 炮
+            case "black5":
+
+                Movable = Chess5CanMove(TargetPos, dragging.position);
+                
+                return Movable;
+
+                
+
+            // 車走法
+            case "red6":
+            case "black6":
+
+                if ((TargetPos.x == dragging.position.x) || (TargetPos.y == dragging.position.y))
+                {
+                    return true;
+                }
+
+
+                break;
+
+            // 紅仕走法
+            case "red7":
+
+                if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
+                {
+                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
+                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
+                    {
+                        return true;
+                    }
+                }
+
+                break;
+
+            // 黑士走法
+            case "black7":
+
+                if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
+                {
+                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
+                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
+                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
+                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
+                    {
+                        return true;
+                    }
+                }
+
+                break;
+
+        }
+
+        return false;
+    }
+
+    private bool IsCheckMate(Transform r)
+    {
+        RaycastHit2D hit_up , hit_down , hit_left , hit_right;
+        hit_up = Physics2D.Raycast(r.transform.position + Vector3.up, Vector3.up , Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        hit_down = Physics2D.Raycast(r.transform.position + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        hit_left = Physics2D.Raycast(r.transform.position + Vector3.left, Vector3.left, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        hit_right = Physics2D.Raycast(r.transform.position + Vector3.right, Vector3.right, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+
+        if (hit_up)
+        {
+            Debug.Log(hit_up.transform.name);
+            if (hit_up.transform.tag == "black6")
+            {
+                
+                Debug.Log("黑方將軍");
+
+                return true;
+            }
+        }
+
+
+        
+
+        return false;
+    }
 
 }

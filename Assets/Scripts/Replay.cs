@@ -70,6 +70,7 @@ public class Replay : MonoBehaviour
         Action.Instance.StatText.text = "";
 
         Focus = GameObject.FindWithTag("Focus");
+        Focus.SetActive(false);
         Destroy(stat);
 
     }
@@ -88,6 +89,7 @@ public class Replay : MonoBehaviour
             if (hit)
             {
                 hit.transform.position = OriginalLocation[index];
+                Focus.SetActive(true);
                 Focus.transform.position = OriginalLocation[index];
 
 
@@ -113,6 +115,7 @@ public class Replay : MonoBehaviour
             if (hit)
             {
                 hit.transform.position = Destination[index];
+                Focus.SetActive(true);
                 Focus.transform.position = Destination[index];
 
                 index += 1;

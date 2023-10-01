@@ -69,8 +69,6 @@ public class chess : MonoBehaviour
                 {
                     Replay.Instance.Revive_Chess.Add(collision.gameObject);
                     collision.gameObject.SetActive(false);
-                    
-                    
 
 
                 }

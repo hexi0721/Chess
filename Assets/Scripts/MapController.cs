@@ -55,8 +55,6 @@ public class MapController : MonoBehaviour
 
     public void initMap()
     {
-        
-
 
         if (GameObject.Find("GameManager"))
         {
