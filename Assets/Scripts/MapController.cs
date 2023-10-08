@@ -25,10 +25,10 @@ public class MapController : MonoBehaviour
     public GameObject black1 , black2, black3, black4, black5, black6, black7;
     public GameObject red1 , red2, red3, red4, red5, red6, red7;
 
-    int x = -8; // x 原點
-    int y = -9; // y 原點
-    int x1 = 2; // x 間隔
-    int y1 = 2; // y 間隔
+    const int x = -8; // x 原點
+    const int y = -9; // y 原點
+    const int x1 = 2; // x 間隔
+    const int y1 = 2; // y 間隔
 
     GameObject child;
     Vector3 pos;
@@ -44,16 +44,11 @@ public class MapController : MonoBehaviour
         pos = new Vector3(0, 0, 0);
         Instantiation(board, pos); // 生成地圖
 
-        initMap();
+        InitMap();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void initMap()
+    
+    public void InitMap()
     {
 
         if (GameObject.Find("GameManager"))

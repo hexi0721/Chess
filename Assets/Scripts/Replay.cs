@@ -18,12 +18,12 @@ public class Replay : MonoBehaviour
 
     public bool Isplay = false ;
 
-    public List<Transform> Chess_Tran = new List<Transform>(); // 要移動的棋子
-    public List<Vector3> OriginalLocation = new List<Vector3>(); // 棋子原本位置
-    public List<Vector3> Destination = new List<Vector3>(); // 移動棋子移動位置
+    public List<Transform> Chess_Tran ; // 要移動的棋子
+    public List<Vector3> OriginalLocation ; // 棋子原本位置
+    public List<Vector3> Destination ; // 移動棋子移動位置
 
-    public List<GameObject> Revive_Chess = new List<GameObject>(); // 要復活的棋子
-    public List<bool> isCollision = new List<bool>(); // 確認是否碰撞
+    public List<GameObject> Revive_Chess ; // 要復活的棋子
+    public List<bool> isCollision ; // 確認是否碰撞
 
 
     public GameObject stat;
@@ -48,17 +48,11 @@ public class Replay : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void PlayReWatch()
     {
         Isplay = true;
         MapController.Instance.DestroyAll();
-        MapController.Instance.initMap();
+        MapController.Instance.InitMap();
 
         Action.Instance.menuplain.SetActive(false);
         Action.Instance.replay_btn.SetActive(false);
@@ -82,7 +76,7 @@ public class Replay : MonoBehaviour
             turn = !turn ;
             index -= 1;
 
-            whoseturn();
+            WhoseTurn();
 
             RaycastHit2D hit = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
 
@@ -95,7 +89,7 @@ public class Replay : MonoBehaviour
 
                 if (isCollision[index] == true)
                 {
-                    Revive_Chess[Revive_Chess.Count - 1].SetActive(true);
+                    Revive_Chess[^1].SetActive(true);
                     
                     Revive_Chess.RemoveAt(Revive_Chess.Count - 1);
                 }
@@ -108,7 +102,7 @@ public class Replay : MonoBehaviour
     {
         if (index < Chess_Tran.Count)
         {
-            whoseturn();
+            WhoseTurn();
 
             RaycastHit2D hit = Physics2D.Raycast(OriginalLocation[index], Vector3.zero, Mathf.Infinity);
 
@@ -126,7 +120,7 @@ public class Replay : MonoBehaviour
         }
     }
 
-    void whoseturn()
+    void WhoseTurn()
     {
         switch (turn)
         {
