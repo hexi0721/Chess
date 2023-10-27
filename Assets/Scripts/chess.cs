@@ -8,17 +8,6 @@ using System.Text.RegularExpressions;
 public class Chess : MonoBehaviour
 {
 
-    //Transform stat;
-    //GameObject child;
-  
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        //stat = GameObject.Find("stat").transform;
-
-    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,8 +19,7 @@ public class Chess : MonoBehaviour
                 {
                     
                     Destroy(collision.gameObject);
-                    /*child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
-                    child.transform.SetParent(stat);*/
+                    
 
 
                 }
@@ -42,14 +30,13 @@ public class Chess : MonoBehaviour
                 if (Regex.IsMatch(collision.transform.tag, "black")) // 碰撞檢測 對方是黑方就破壞
                 {
                     Destroy(collision.gameObject);
-                    /*child = GameObject.Instantiate(collision.gameObject, new Vector3(-14, 2, 0), Quaternion.identity) as GameObject;
-                    child.transform.SetParent(stat);*/
+                    
 
                 }
                 
             }
 
-            //Action.Instance.StatText.text = "slain";
+            
         }
         else
         {

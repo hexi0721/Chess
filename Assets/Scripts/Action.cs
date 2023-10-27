@@ -6,15 +6,10 @@ using UnityEngine.UI;
 public class Action : MonoBehaviour
 {
 
-    static Action _instance;
+    static Action _instance; // ctrl + r + e
 
-    public static Action Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    public static Action Instance { get => _instance; }
+
 
     public GameObject replay;
 
@@ -30,6 +25,12 @@ public class Action : MonoBehaviour
     public Text WhoWinText;
     public Text RoundText;
     public Text StatText;
+    
+    // Scroll
+
+    public GameObject StatScrollView;
+
+
 
     private void Awake()
     {
@@ -58,8 +59,10 @@ public class Action : MonoBehaviour
         RoundText = GameObject.Find("round").GetComponent<Text>(); // 回合文字
         
 
-        StatText = GameObject.Find("stat_txt").GetComponent<Text>(); // 狀態文字
+        StatText = GameObject.Find("StatContent").GetComponent<Text>(); // 狀態文字
         StatText.text = "";
+
+        
     }
 
     // Update is called once per frame

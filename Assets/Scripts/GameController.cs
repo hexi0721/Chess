@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
 
     GameObject FocusTmp ;
 
-    bool HackMode = false;
+    bool HackMode = false; // 作弊
     
     void Start()
     {
@@ -433,6 +433,7 @@ public class GameController : MonoBehaviour
                     {
                         
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
+                        Action.Instance.StatText.text += dragging.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
                         Replay.Instance.isCollision.Add(true);
 
                         
@@ -440,10 +441,14 @@ public class GameController : MonoBehaviour
                     else
                     {
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
+                        Action.Instance.StatText.text += dragging.transform.name[0] + "  移動 \n";
                         Replay.Instance.isCollision.Add(false);
                     }
                     
-
+                    if(Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+                    {
+                        Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y , 0 );
+                    }
 
                     turn = !turn; // 改變回合
                     Movable = false;
@@ -471,19 +476,8 @@ public class GameController : MonoBehaviour
                         
                             
                     }
-                    
 
-                    // 狀態父子
-                    /*int index = stat.childCount;
-                    
-                    for (int i = index - 1; i >= 0; i--)
-                    {
-                        Destroy(stat.GetChild(i).gameObject);
-                    }
 
-                    child = GameObject.Instantiate(GameObject.FindWithTag(target), new Vector3(-14,6,0), Quaternion.identity) as GameObject;
-                    child.transform.SetParent(stat);
-                    Action.Instance.StatText.text = "Move";*/
 
                 }
                 else

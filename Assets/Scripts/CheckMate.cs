@@ -7,7 +7,7 @@ public class CheckMate : MonoBehaviour
 
     Vector3 King; // 帥與將位置
 
-    bool redcheckmate , blackcheckmate ; // 哪方將軍
+    static bool redcheckmate , blackcheckmate ; // 哪方將軍
 
     // Start is called before the first frame update
     void Start()
@@ -174,7 +174,7 @@ public class CheckMate : MonoBehaviour
 
         bool inner(Vector3 pos, Vector3 d)
         {
-            RaycastHit2D hit = Physics2D.Raycast(pos + d, d, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+            RaycastHit2D hit = Physics2D.Raycast(pos + d, d, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
             if (!hit)
             {
@@ -288,18 +288,26 @@ public class CheckMate : MonoBehaviour
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            
+            Action.Instance.StatText.text += "CheckMate!\n";
+            if (Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+            {
+                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y, 0);
+            }
             redcheckmate = false;
         }
         else if (blackcheckmate && !GameController.turn)
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            
+            Action.Instance.StatText.text += "CheckMate!\n";
+            if (Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+            {
+                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y, 0);
+            }
             blackcheckmate = false;
         }
 
-
+        
 
     }
 }
