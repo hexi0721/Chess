@@ -7,28 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class Menuoptionscript : MonoBehaviour
 {
-    
-    public GameObject TitleBGM;
-    GameObject BGM = null;
-    
-    
 
     public GameObject Arrow_left , Arrow_right;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        // ¿À¨d¶≥µLsound tag
-        BGM = GameObject.FindGameObjectWithTag("sound"); 
-        if (BGM == null)
-        {
-            Instantiate(TitleBGM);
-        }
-        
-
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -73,6 +54,12 @@ public class Menuoptionscript : MonoBehaviour
     {
         AudioManager.Instance.PlayAuido(AudioManager.Instance.RestartAudio);
         SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+    }
+
+    public void Click_enterAIgame()
+    {
+        AudioManager.Instance.PlayAuido(AudioManager.Instance.RestartAudio);
+        SceneManager.LoadScene("GameScene2", LoadSceneMode.Single);
     }
 
     public void Click_exitgame()

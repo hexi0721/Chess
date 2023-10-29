@@ -25,13 +25,13 @@ public class Replay : MonoBehaviour
     public List<GameObject> Revive_Chess ; // 要復活的棋子
     public List<bool> isCollision ; // 確認是否碰撞
 
-
-    public GameObject stat;
     public GameObject Focus; // 瞄準
     
 
     public bool turn;
     public int index;
+
+    
 
     private void Awake()
     {
@@ -58,14 +58,16 @@ public class Replay : MonoBehaviour
         Action.Instance.replay_btn.SetActive(false);
         Action.Instance.setting_btn.SetActive(true);
         Action.Instance.replay.SetActive(true);
+        Action.Instance.StatScrollView.SetActive(true);
 
         Action.Instance.WhoWinText.text = "";
-        Action.Instance.RoundText.text = "";
-        Action.Instance.StatText.text = "";
+        Action.Instance.RoundText.text = "第" + (index / 2 + 1) + "回合 - 紅";
+        
+
 
         Focus = GameObject.FindWithTag("Focus");
         Focus.SetActive(false);
-        Destroy(stat);
+        
 
     }
 
@@ -79,6 +81,7 @@ public class Replay : MonoBehaviour
             WhoseTurn();
 
             RaycastHit2D hit = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
+            
 
             if (hit)
             {
@@ -106,6 +109,8 @@ public class Replay : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(OriginalLocation[index], Vector3.zero, Mathf.Infinity);
 
+            RaycastHit2D hit2 = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
+
             if (hit)
             {
                 hit.transform.position = Destination[index];
@@ -113,6 +118,21 @@ public class Replay : MonoBehaviour
                 Focus.transform.position = Destination[index];
 
                 index += 1;
+            }
+
+            if (hit2)
+            {
+               
+               Action.Instance.StatText.text += hit.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
+            }
+            else
+            {
+                Action.Instance.StatText.text += hit.transform.name[0] + "  移動 \n";
+            }
+
+            if(Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+            {
+                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y , 0 );
             }
 
             turn = !turn ;

@@ -433,7 +433,7 @@ public class GameController : MonoBehaviour
                     {
                         
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-                        Action.Instance.StatText.text += dragging.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
+                        //Action.Instance.StatText.text += dragging.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
                         Replay.Instance.isCollision.Add(true);
 
                         
@@ -441,14 +441,14 @@ public class GameController : MonoBehaviour
                     else
                     {
                         AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
-                        Action.Instance.StatText.text += dragging.transform.name[0] + "  移動 \n";
+                        //Action.Instance.StatText.text += dragging.transform.name[0] + "  移動 \n";
                         Replay.Instance.isCollision.Add(false);
                     }
                     
-                    if(Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+                    /*if(Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
                     {
                         Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y , 0 );
-                    }
+                    }*/
 
                     turn = !turn; // 改變回合
                     Movable = false;

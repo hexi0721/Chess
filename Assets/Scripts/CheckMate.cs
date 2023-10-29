@@ -288,22 +288,16 @@ public class CheckMate : MonoBehaviour
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            Action.Instance.StatText.text += "CheckMate!\n";
-            if (Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
-            {
-                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y, 0);
-            }
+            //Action.Instance.StatText.text += "CheckMate!\n";
+            
             redcheckmate = false;
         }
         else if (blackcheckmate && !GameController.turn)
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            Action.Instance.StatText.text += "CheckMate!\n";
-            if (Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
-            {
-                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y, 0);
-            }
+            //Action.Instance.StatText.text += "CheckMate!\n";
+            
             blackcheckmate = false;
         }
 

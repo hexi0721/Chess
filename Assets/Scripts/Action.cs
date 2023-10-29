@@ -53,6 +53,9 @@ public class Action : MonoBehaviour
         menuplain.SetActive(false); // 順序不可往上移動
         replay.SetActive(false);
 
+        
+
+
         WhoWinText = GameObject.Find("whowin").GetComponent<Text>(); // 誰勝誰負文字
         WhoWinText.text = "";
 
@@ -62,7 +65,8 @@ public class Action : MonoBehaviour
         StatText = GameObject.Find("StatContent").GetComponent<Text>(); // 狀態文字
         StatText.text = "";
 
-        
+        StatScrollView = GameObject.Find("Stat");
+        StatScrollView.SetActive(false);
     }
 
     // Update is called once per frame
