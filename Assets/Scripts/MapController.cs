@@ -57,22 +57,22 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 5; i++)
             {
 
-                ChangeScale(red1, false);
+                
                 pos = new Vector3(x + i * 2 * x1, y + 3 * y1, 0);
                 Instantiation(red1, pos);
 
-                ChangeScale(black1, true);
+                
                 pos = new Vector3(x + i * 2 * x1, y + 6 * y1, 0);
                 Instantiation(black1, pos);
 
             }
 
             // 生成帥
-            ChangeScale(red2, false);
+            
             pos = new Vector3(x + 4 * x1, y, 0);
             Instantiation(red2, pos);
 
-            ChangeScale(black2, true);
+            
             pos = new Vector3(x + 4 * x1, y + 9 * y1, 0);
             Instantiation(black2, pos);
 
@@ -80,11 +80,11 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 2; i += 1)
             {
 
-                ChangeScale(red3, false);
+                
                 pos = new Vector3((x + 2 * x1) + i * 4 * x1, y, 0);
                 Instantiation(red3, pos);
 
-                ChangeScale(black3, true);
+                
                 pos = new Vector3((x + 2 * x1) + i * 4 * x1, y + 9 * y1, 0);
                 Instantiation(black3, pos);
 
@@ -94,11 +94,11 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 2; i += 1)
             {
 
-                ChangeScale(red4, false);
+                
                 pos = new Vector3((x + x1) + i * 6 * x1, y, 0);
                 Instantiation(red4, pos);
 
-                ChangeScale(black4, true);
+                
                 pos = new Vector3((x + x1) + i * 6 * x1, y + 9 * y1, 0);
                 Instantiation(black4, pos);
 
@@ -108,11 +108,11 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 2; i += 1)
             {
 
-                ChangeScale(red5, false);
+                
                 pos = new Vector3((x + x1) + i * 6 * x1, y + 2 * y1, 0);
                 Instantiation(red5, pos);
 
-                ChangeScale(black5, true);
+                
                 pos = new Vector3((x + x1) + i * 6 * x1, y + 7 * y1, 0);
                 Instantiation(black5, pos);
             }
@@ -121,11 +121,11 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 2; i += 1)
             {
 
-                ChangeScale(red6, false);
+                
                 pos = new Vector3(x + i * 8 * x1, y, 0);
                 Instantiation(red6, pos);
 
-                ChangeScale(black6, true);
+                
                 pos = new Vector3(x + i * 8 * x1, y + 9 * y1, 0);
                 Instantiation(black6, pos);
 
@@ -135,11 +135,11 @@ public class MapController : MonoBehaviour
             for (int i = 0; i < 2; i += 1)
             {
 
-                ChangeScale(red7, false);
+                
                 pos = new Vector3((x + 3 * x1) + i * 2 * x1, y, 0);
                 Instantiation(red7, pos);
 
-                ChangeScale(black7, true);
+                
                 pos = new Vector3((x + 3 * x1) + i * 2 * x1, y + 9 * y1, 0);
                 Instantiation(black7, pos);
             }
@@ -149,19 +149,23 @@ public class MapController : MonoBehaviour
     }
 
 
-    public void ChangeScale(GameObject G , bool Flip) // 改變大小 轉向 設置層
+    public void ChangeScale(GameObject G , string S ,bool Flip ) // 改變大小 轉向 設置層
     {
         int layer;
         G.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         
-        if (Flip)
+        if (S == "black")
         {
-            G.GetComponent<SpriteRenderer>().flipY = false;
+            if (Flip)
+            {
+                G.transform.Rotate(new Vector3(0, 0, 180));
+            }
+            
             layer = LayerMask.NameToLayer("black");
             G.layer = layer;
             
         }
-        else
+        else if (S == "red")
         {
             layer = LayerMask.NameToLayer("red");
             G.layer = layer;
@@ -174,15 +178,23 @@ public class MapController : MonoBehaviour
     {
         child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
 
-        
-
         if (Regex.IsMatch(G.transform.tag, "red"))
         {
-            
+            ChangeScale(child, "red" ,false);
             child.transform.SetParent(RedChess);
         }
         else if (Regex.IsMatch(G.transform.tag, "black"))
         {
+            if(GameObject.Find("AIManager"))
+            {
+                ChangeScale(child, "black" , false);
+            }
+            else
+            {
+                ChangeScale(child, "black", true);
+            }
+            
+            
             child.transform.SetParent(BlackChess);
         }
             

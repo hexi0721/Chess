@@ -125,11 +125,11 @@ public class CheckMate : MonoBehaviour
         RaycastHit2D hit_right_up = Physics2D.Raycast(pos + new Vector3(2, 4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left_up = Physics2D.Raycast(pos + new Vector3(-2, 4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        if (hit_right_up && hit_right_up.transform.CompareTag(s) && inner(hit_right_up.transform.position, Vector3.down))
+        if (hit_right_up && hit_right_up.transform.CompareTag(s) && Inner(hit_right_up.transform.position, Vector3.down))
         {
             return true;
         }
-        else if (hit_left_up && hit_left_up.transform.CompareTag(s) && inner(hit_left_up.transform.position , Vector3.down))
+        else if (hit_left_up && hit_left_up.transform.CompareTag(s) && Inner(hit_left_up.transform.position , Vector3.down))
         {
             return true;
         }
@@ -137,11 +137,11 @@ public class CheckMate : MonoBehaviour
         RaycastHit2D hit_right_down = Physics2D.Raycast(pos + new Vector3(2, -4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left_down = Physics2D.Raycast(pos + new Vector3(-2, -4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        if (hit_right_down && hit_right_down.transform.CompareTag(s) && inner(hit_right_down.transform.position, Vector3.up))
+        if (hit_right_down && hit_right_down.transform.CompareTag(s) && Inner(hit_right_down.transform.position, Vector3.up))
         {
             return true;
         }
-        else if (hit_left_down && hit_left_down.transform.CompareTag(s) && inner(hit_left_down.transform.position, Vector3.up))
+        else if (hit_left_down && hit_left_down.transform.CompareTag(s) && Inner(hit_left_down.transform.position, Vector3.up))
         {
             return true;
         }
@@ -149,11 +149,11 @@ public class CheckMate : MonoBehaviour
         RaycastHit2D hit_up_left = Physics2D.Raycast(pos + new Vector3(-4, 2, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down_left = Physics2D.Raycast(pos + new Vector3(-4, -2, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        if (hit_up_left && hit_up_left.transform.CompareTag(s) && inner(hit_up_left.transform.position, Vector3.right))
+        if (hit_up_left && hit_up_left.transform.CompareTag(s) && Inner(hit_up_left.transform.position, Vector3.right))
         {
             return true;
         }
-        else if (hit_down_left && hit_down_left.transform.CompareTag(s) && inner(hit_down_left.transform.position, Vector3.right))
+        else if (hit_down_left && hit_down_left.transform.CompareTag(s) && Inner(hit_down_left.transform.position, Vector3.right))
         {
             return true;
         }
@@ -161,18 +161,18 @@ public class CheckMate : MonoBehaviour
         RaycastHit2D hit_up_right = Physics2D.Raycast(pos + new Vector3(4, 2, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down_right = Physics2D.Raycast(pos + new Vector3(4, -2, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        if (hit_up_right && hit_up_right.transform.CompareTag(s) && inner(hit_up_right.transform.position, Vector3.left))
+        if (hit_up_right && hit_up_right.transform.CompareTag(s) && Inner(hit_up_right.transform.position, Vector3.left))
         {
             return true;
         }
-        else if (hit_down_right && hit_down_right.transform.CompareTag(s) && inner(hit_down_right.transform.position, Vector3.left))
+        else if (hit_down_right && hit_down_right.transform.CompareTag(s) && Inner(hit_down_right.transform.position, Vector3.left))
         {
             return true;
         }
 
         return false;
 
-        bool inner(Vector3 pos, Vector3 d)
+        static bool Inner(Vector3 pos, Vector3 d)
         {
             RaycastHit2D hit = Physics2D.Raycast(pos + d, d, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 

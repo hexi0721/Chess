@@ -33,7 +33,7 @@ public class Replay : MonoBehaviour
 
     
 
-    private void Awake()
+    void Awake()
     {
         _instance = this;
     }
@@ -79,6 +79,8 @@ public class Replay : MonoBehaviour
             index -= 1;
 
             WhoseTurn();
+
+            Action.Instance.StatText.text = "";
 
             RaycastHit2D hit = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
             
