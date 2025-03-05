@@ -8,24 +8,29 @@ public class CheckMate : MonoBehaviour
     Vector3 King; // 帥與將位置
 
     static bool redcheckmate , blackcheckmate ; // 哪方將軍
+    GameController gameController;
+    Action action;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         redcheckmate = false;
         blackcheckmate = false;
+
+        gameController = GetComponent<GameController>();
+        action = GetComponent<Action>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         // 判斷將軍
-        if (GameController.JudgeCheckMateTurnIsChange)
+        if (gameController.JudgeCheckMateTurnIsChange)
         {
             
             King = GameObject.FindWithTag("red2").transform.position;
 
-            if (GameController.turn == false && JudgeChess1IsCheckMate("black1", King) || JudgeChess2IsCheckMate("black2" , King) || JudgeChess4IsCheckMate("black4" , King) || JudgeChess5IsCheckMate("black5", King) || JudgeChess6IsCheckMate("black6", King))
+            if (gameController.Turn == false && JudgeChess1IsCheckMate("black1", King) || JudgeChess2IsCheckMate("black2" , King) || JudgeChess4IsCheckMate("black4" , King) || JudgeChess5IsCheckMate("black5", King) || JudgeChess6IsCheckMate("black6", King))
             {
                 blackcheckmate = true;
 
@@ -41,7 +46,7 @@ public class CheckMate : MonoBehaviour
            /* RaycastHit2D h = Physics2D.Raycast(King.transform.position + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
             Debug.Log(2 + " " + h.transform.name);*/
 
-            if (GameController.turn == true && JudgeChess1IsCheckMate("red1", King) || JudgeChess2IsCheckMate("red2", King) || JudgeChess4IsCheckMate("red4", King) || JudgeChess5IsCheckMate("red5", King) || JudgeChess6IsCheckMate("red6", King))
+            if (gameController.Turn == true && JudgeChess1IsCheckMate("red1", King) || JudgeChess2IsCheckMate("red2", King) || JudgeChess4IsCheckMate("red4", King) || JudgeChess5IsCheckMate("red5", King) || JudgeChess6IsCheckMate("red6", King))
             {
                 redcheckmate = true;
                         
@@ -52,13 +57,13 @@ public class CheckMate : MonoBehaviour
             }
 
 
-            GameController.JudgeCheckMateTurnIsChange = false;
+            gameController.JudgeCheckMateTurnIsChange = false;
             //Debug.Log(blackcheckmate + " " + redcheckmate);
             
             
         }
 
-        if (!GameController.Isend)
+        if (!action.IsEnd)
         {
             PlayCheckMateAudio();
         }
@@ -284,7 +289,7 @@ public class CheckMate : MonoBehaviour
     private void PlayCheckMateAudio()
     {
 
-        if (redcheckmate && GameController.turn)
+        if (redcheckmate && gameController.Turn)
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
@@ -292,7 +297,7 @@ public class CheckMate : MonoBehaviour
             
             redcheckmate = false;
         }
-        else if (blackcheckmate && !GameController.turn)
+        else if (blackcheckmate && !gameController.Turn)
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);

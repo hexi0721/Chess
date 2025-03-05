@@ -60,9 +60,6 @@ TagManager:
   - name: BackGround
     uniqueID: 3947631443
     locked: 0
-  - name: Board
-    uniqueID: 271375849
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -71,4 +68,7 @@ TagManager:
     locked: 0
   - name: game_option
     uniqueID: 2727054083
+    locked: 0
+  - name: Text
+    uniqueID: 4192805427
     locked: 0

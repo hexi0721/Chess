@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Replay : MonoBehaviour
 {
@@ -26,12 +27,18 @@ public class Replay : MonoBehaviour
     public List<bool> isCollision ; // 確認是否碰撞
 
     public GameObject Focus; // 瞄準
-    
+
+    [SerializeField] GameObject menuOption;
+    [SerializeField] GameObject rePlay;
+    [SerializeField] GameObject statScrollView;
+
+    [SerializeField] Text whoWin , statText;
 
     public bool turn;
     public int index;
 
-    
+    [SerializeField] MapController mapController;
+    [SerializeField] Action action;
 
     void Awake()
     {
@@ -51,17 +58,17 @@ public class Replay : MonoBehaviour
     public void PlayReWatch()
     {
         Isplay = true;
-        MapController.Instance.DestroyAll();
-        MapController.Instance.InitMap();
+        mapController.DestroyAll();
+        mapController.InitMap();
 
-        Action.Instance.menuplain.SetActive(false);
-        Action.Instance.replay_btn.SetActive(false);
-        Action.Instance.setting_btn.SetActive(true);
-        Action.Instance.replay.SetActive(true);
-        Action.Instance.StatScrollView.SetActive(true);
+        menuOption.transform.GetChild(0).gameObject.SetActive(true); // settingBtn
+        menuOption.transform.GetChild(2).gameObject.SetActive(false); // replayBtn
+        
+        rePlay.SetActive(true);
+        statScrollView.SetActive(true);
 
-        Action.Instance.WhoWinText.text = "";
-        Action.Instance.RoundText.text = "第" + (index / 2 + 1) + "回合 - 紅";
+        whoWin.text = "";
+        action.RoundText.text = "第" + (index / 2 + 1) + "回合 - 紅";
         
 
 
@@ -80,7 +87,7 @@ public class Replay : MonoBehaviour
 
             WhoseTurn();
 
-            Action.Instance.StatText.text = "";
+            statText.text = "";
 
             RaycastHit2D hit = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
             
@@ -125,16 +132,16 @@ public class Replay : MonoBehaviour
             if (hit2)
             {
                
-               Action.Instance.StatText.text += hit.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
+               statText.text += hit.transform.name[0] + "  吃  " + hit2.transform.name[0] + "\n";
             }
             else
             {
-                Action.Instance.StatText.text += hit.transform.name[0] + "  移動 \n";
+                statText.text += hit.transform.name[0] + "  移動 \n";
             }
 
-            if(Action.Instance.StatText.rectTransform.sizeDelta.y > 30)
+            if(statText.rectTransform.sizeDelta.y > 30)
             {
-                Action.Instance.StatText.transform.localPosition = new Vector3(Action.Instance.StatText.transform.localPosition.x, Action.Instance.StatText.rectTransform.sizeDelta.y , 0 );
+                statText.transform.localPosition = new Vector3(statText.transform.localPosition.x, statText.rectTransform.sizeDelta.y , 0 );
             }
 
             turn = !turn ;
@@ -147,11 +154,11 @@ public class Replay : MonoBehaviour
         switch (turn)
         {
             case false:
-                Action.Instance.RoundText.text = "第" + (index / 2 + 1) + "回合 - 紅";
+                action.RoundText.text = "第" + (index / 2 + 1) + "回合 - 紅";
                 break;
 
             case true:
-                Action.Instance.RoundText.text = "第" + (index / 2 + 1) + "回合 - 黑";
+                action.RoundText.text = "第" + (index / 2 + 1) + "回合 - 黑";
 
                 break;
         }
