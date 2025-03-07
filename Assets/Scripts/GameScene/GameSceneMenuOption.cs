@@ -16,13 +16,13 @@ public class GameSceneMenuOption : MonoBehaviour
     {
         Transform iner = inerOption.transform;
         iner.GetChild(0).GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // ReturnBtn
-        iner.GetChild(1).GetComponent<Button>().onClick.AddListener(() => { Replay.Instance.PlayReWatch(); }); // ReplayBtn
+        iner.GetChild(1).GetChild(0).GetComponent<Button>().onClick.AddListener(() => { Replay.Instance.PlayReWatch(); }); // ReplayBtn
         iner.GetChild(2).GetComponent<Button>().onClick.AddListener(ResetBtn); // ResetBtn
         iner.GetChild(3).GetComponent<Button>().onClick.AddListener(HomeReturn); // HomeReturnBtn
         settingBtn.GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // SettingBtn
 
         CreateEventEntry(iner.GetChild(0).gameObject);
-        CreateEventEntry(iner.GetChild(1).gameObject);
+        CreateEventEntry(iner.GetChild(1).GetChild(0).gameObject);
         CreateEventEntry(iner.GetChild(2).gameObject);
         CreateEventEntry(iner.GetChild(3).gameObject);
     }
@@ -51,14 +51,8 @@ public class GameSceneMenuOption : MonoBehaviour
 
     public void HoverButton(GameObject go)
     {
-
-
-        Arrow_left.transform.SetParent(go.transform);
-        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.transform.localPosition.x + 225, 0, 0);
-
-        Arrow_right.transform.SetParent(go.transform);
-        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.transform.localPosition.x - 225, 0, 0);
-
+        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_left.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
+        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_right.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
     }
 
     public void ClickGameReturnOrOpenMenu()
@@ -66,7 +60,7 @@ public class GameSceneMenuOption : MonoBehaviour
         AudioManager.Instance.PlayAuido(AudioManager.Instance.ReturnAudio);
         inerOption.SetActive(!inerOption.activeSelf);
 
-        if (!Replay.Instance.Isplay)
+        if (!Replay.Instance.IsPlaying)
         {
             inerOption.transform.GetChild(1).gameObject.SetActive(false); // ReplayBtn
             switch (inerOption.activeSelf)

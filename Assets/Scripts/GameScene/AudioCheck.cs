@@ -8,7 +8,6 @@ public class AudioCheck : MonoBehaviour
     public GameObject TitleBGM;
     GameObject BGM = null;
 
-    // Start is called before the first frame update
     void Start()
     {
 

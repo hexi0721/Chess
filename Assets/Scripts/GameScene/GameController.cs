@@ -15,8 +15,9 @@ public class GameController : MonoBehaviour
     string target; //  target tag
     bool Movable; // 能否移動
     
+    public bool IsEnd { get; set; }
 
-    
+
     public GameObject Focus ; // 瞄準
     GameObject FocusTmp;
 
@@ -39,7 +40,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         round = 1;
-        
+        IsEnd = false;
         dragging = null;
         Turn = false;
         FocusTmp = null;
@@ -50,9 +51,12 @@ public class GameController : MonoBehaviour
         action = GetComponent<Action>();
     }
 
+
     // 要確保Chess將帥射線正確  [執行順序 Chess -> GameController] 因此Chess 將帥射線能指向
     void LateUpdate() 
     {
+        if (IsEnd)
+            return;
 
         CheatMode();
 
@@ -157,7 +161,7 @@ public class GameController : MonoBehaviour
                     // 判斷帥或將是否被吃
                     if (TargetPos == b.transform.position || TargetPos == r.transform.position)
                     {
-                        action.IsEnd = true;
+                        IsEnd = true;
                     }
                     
                     // 蒐集Replay 棋子 棋子座標 移動座標
@@ -190,22 +194,20 @@ public class GameController : MonoBehaviour
 
                     Turn = !Turn; // 改變回合
                     Movable = false;
-                    if (action.IsEnd != true)
+                    if (IsEnd != true)
                     {
-                        
-                        switch (Turn)
+
+
+
+                        if (!Turn)
                         {
-                            case false:
-                                action.RoundText.text = "第" + round + "回合 - 紅";
 
-                                
-                                break;
-
-                            case true:
-                                action.RoundText.text = "第" + round + "回合 - 黑";
-                                round += 1;
-                                
-                                break;
+                            action.RoundText.text = "第" + round + "回合 - 紅";
+                        }
+                        else
+                        {
+                            action.RoundText.text = "第" + round + "回合 - 黑";
+                            round += 1;
                         }
 
                         JudgeCheckMateTurnIsChange = true;
@@ -243,13 +245,13 @@ public class GameController : MonoBehaviour
         {
 
             Destroy(GameObject.FindWithTag("red2"));
-            action.IsEnd = true;
+            IsEnd = true;
         }
         else if (Input.GetKeyDown(KeyCode.E) && HackMode)
         {
             Destroy(GameObject.FindWithTag("black2"));
             Turn = !Turn;
-            action.IsEnd = true;
+            IsEnd = true;
         }
     }
 

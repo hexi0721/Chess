@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class Action : MonoBehaviour
 {
-
-    [SerializeField] GameObject replay;
 
     [SerializeField] Text WhoWinText ;
     public Text RoundText;
@@ -17,22 +16,24 @@ public class Action : MonoBehaviour
     GameController gameController;
     [SerializeField] GameSceneMenuOption gameSceneMenuOption;
 
-    public bool IsEnd { get; set; }
+    
 
     void Start()
     {
-        IsEnd = false;
 
         gameController = GetComponent<GameController>();
+        
         gameSceneMenuOption.inerOption.SetActive(false); // 順序不可往上移動
-        replay.SetActive(false);
-
+        
         StatScrollView.SetActive(false);
     }
 
-    private void LateUpdate()
+    void Update()
     {
-        if (IsEnd)
+        if (Replay.Instance.IsPlaying)
+            return;
+
+        if (gameController.IsEnd)
         {
 
             switch (gameController.Turn)
@@ -48,18 +49,21 @@ public class Action : MonoBehaviour
 
 
             gameSceneMenuOption.settingBtn.SetActive(false); // SettingBtn
+            gameSceneMenuOption.inerOption.SetActive(true); // InerOption
             gameSceneMenuOption.inerOption.transform.GetChild(0).gameObject.SetActive(false); // GameReturnBtn
-            gameSceneMenuOption.inerOption.transform.GetChild(1).gameObject.SetActive(true); // ReplayBtn
-            
-            gameController.enabled = false;
+
+            var rePlay = gameSceneMenuOption.inerOption.transform.GetChild(1).gameObject; // Replay
+            rePlay.SetActive(true);
+            rePlay.transform.GetChild(0).gameObject.SetActive(true);
+            rePlay.transform.GetChild(1).gameObject.SetActive(false);
+            rePlay.transform.GetChild(2).gameObject.SetActive(false);
+
+            gameSceneMenuOption.inerOption.transform.GetChild(2).gameObject.SetActive(true); // ResetBtn
+            gameSceneMenuOption.inerOption.transform.GetChild(3).gameObject.SetActive(true); // HomeBtn
 
         }
-    }
 
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && IsEnd != true)
+        if (Input.GetKeyDown(KeyCode.Escape) && gameController.IsEnd != true)
         {
             gameSceneMenuOption.ClickGameReturnOrOpenMenu();
             

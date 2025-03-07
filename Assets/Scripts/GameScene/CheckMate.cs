@@ -9,8 +9,6 @@ public class CheckMate : MonoBehaviour
 
     static bool redcheckmate , blackcheckmate ; // ­þ¤è±N­x
     GameController gameController;
-    Action action;
-
 
     void Start()
     {
@@ -18,7 +16,7 @@ public class CheckMate : MonoBehaviour
         blackcheckmate = false;
 
         gameController = GetComponent<GameController>();
-        action = GetComponent<Action>();
+        
     }
 
 
@@ -63,7 +61,7 @@ public class CheckMate : MonoBehaviour
             
         }
 
-        if (!action.IsEnd)
+        if (!gameController.IsEnd)
         {
             PlayCheckMateAudio();
         }

@@ -16,7 +16,7 @@ public class Chess : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!Replay.Instance.Isplay)
+        if (!Replay.Instance.IsPlaying)
         {
             if (gameController.Turn == false)
             {

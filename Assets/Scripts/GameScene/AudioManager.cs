@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    static AudioManager _instance;
 
     public AudioClip RestartAudio, ReturnAudio, QuitAudio , MoveAudio , KillAudio , CheckMateAudio;
 
-    
-
     public static AudioManager Instance
     {
-        get
-        {
-            return _instance;
-        }
+        get; private set;
     }
 
 
@@ -23,9 +17,8 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
+        Instance = this;
 
-        
     }
 
     void Start()
