@@ -17,8 +17,6 @@ public class Replay : MonoBehaviour
     public List<GameObject> Revive_Chess ; // 要復活的棋子
     public List<bool> isCollision ; // 確認是否碰撞
 
-    public GameObject Focus; // 瞄準
-
     [SerializeField] Text whoWin , replayContent;
 
     public bool turn;
@@ -78,8 +76,7 @@ public class Replay : MonoBehaviour
         transform.GetChild(3).gameObject.SetActive(true); // replayView
 
         whoWin.text = "";
-        Focus = GameObject.FindWithTag("Focus");
-        Focus.SetActive(false);
+
 
     }
 
@@ -106,8 +103,7 @@ public class Replay : MonoBehaviour
             if (hit)
             {
                 hit.transform.position = OriginalLocation[index];
-                Focus.SetActive(true);
-                Focus.transform.position = OriginalLocation[index];
+
 
 
                 if (isCollision[index] == true)
@@ -134,8 +130,7 @@ public class Replay : MonoBehaviour
             if (hit.collider != null)
             {
                 hit.transform.position = Destination[index];
-                Focus.SetActive(true);
-                Focus.transform.position = Destination[index];
+
 
                 index += 1;
 

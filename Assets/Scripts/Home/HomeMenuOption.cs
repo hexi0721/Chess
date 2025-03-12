@@ -13,7 +13,7 @@ public class HomeMenuOption : MonoBehaviour
 
     public GameObject Arrow_left , Arrow_right;
     [SerializeField] GameObject exitGameBtn, enterGameBtn;
-    
+    [SerializeField] float speed = 5f;
 
     private void Start()
     {
@@ -33,8 +33,8 @@ public class HomeMenuOption : MonoBehaviour
     void Update()
     {
         // Ωb¿Y±€¬‡
-        Arrow_left.transform.Rotate(0.1f,0,0);
-        Arrow_right.transform.Rotate(0.1f, 0, 0);
+        Arrow_left.transform.Rotate(speed * Time.deltaTime,0,0);
+        Arrow_right.transform.Rotate(speed * Time.deltaTime, 0, 0);
         
     }
 
@@ -54,14 +54,8 @@ public class HomeMenuOption : MonoBehaviour
 
     public void HoverButton(GameObject go)
     {
-        
-        
-        Arrow_left.transform.SetParent(go.transform);
-        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.transform.localPosition.x + 225, 0, 0);
-
-        Arrow_right.transform.SetParent(go.transform);
-        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.transform.localPosition.x - 225, 0, 0);
-
+        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_left.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
+        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_right.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
     }
 
 
