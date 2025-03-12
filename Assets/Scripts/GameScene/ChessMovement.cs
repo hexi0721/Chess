@@ -7,25 +7,26 @@ public class ChessMovement
     public bool WhichTargetMove(string target , Vector3 TargetPos , Transform dragging)
     {
         RaycastHit2D hit;
+        int x = Mathf.RoundToInt(dragging.position.x);
+        int y = Mathf.RoundToInt(dragging.position.y);
+        Vector3 pos = new Vector3(x, y , 0);
         switch (target)
         {
             // 紅兵走法
             case "red1":
 
-                if (dragging.position.y < 0)
+                if (pos.y < 0)
                 {
-
-                    if ((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x))
+                    if ((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x))
                     {
                         return true;
                     }
                 }
-                else if (dragging.position.y > 0)
+                else if (pos.y > 0)
                 {
-
-                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    if (((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y)))
                     {
                         return true;
                     }
@@ -36,20 +37,18 @@ public class ChessMovement
             // 黑卒走法
             case "black1":
 
-                if (dragging.position.y > 0)
+                if (pos.y > 0)
                 {
-
-                    if ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x))
+                    if ((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x))
                     {
                         return true;
                     }
                 }
-                else if (dragging.position.y < 0)
+                else if (pos.y < 0)
                 {
-
-                    if (((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    if (((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y)))
                     {
                         return true;
                     }
@@ -60,16 +59,14 @@ public class ChessMovement
             // 紅帥走法
             case "red2":
 
-                hit = Physics2D.Raycast(dragging.position + new Vector3(0, 1, 0), Vector2.up,
-                                    Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
+                hit = Physics2D.Raycast(pos + new Vector3(0, 1, 0), Vector2.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
                 if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
                 {
-                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    if (((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y)))
                     {
                         return true;
                     }
@@ -82,27 +79,21 @@ public class ChessMovement
                         return true;
                     }
 
-
                 }
-
 
                 break;
 
             // 黑將走法
             case "black2":
 
-
-                hit = Physics2D.Raycast(dragging.position - new Vector3(0, 1, 0), Vector2.down,
-                                    Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-
+                hit = Physics2D.Raycast(pos - new Vector3(0, 1, 0), Vector2.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
                 if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
                 {
-                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y)))
+                    if (((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y)))
                     {
                         return true;
                     }
@@ -121,10 +112,9 @@ public class ChessMovement
             // 紅相走法
             case "red3":
 
-
                 if (TargetPos.y < 0)
                 {
-                    return Chess3CanMove(TargetPos, dragging.position);
+                    return Chess3CanMove(TargetPos, pos);
                 }
 
                 break;
@@ -135,7 +125,7 @@ public class ChessMovement
 
                 if (TargetPos.y > 0)
                 {
-                    return  Chess3CanMove(TargetPos, dragging.position);
+                    return  Chess3CanMove(TargetPos, pos);
                 }
 
                 break;
@@ -144,37 +134,29 @@ public class ChessMovement
             case "red4": // 馬
             case "black4":
 
-
-                return  Chess4CanMove(TargetPos, dragging.position);
-
-                
+                return  Chess4CanMove(TargetPos, pos);
 
             case "red5": // 炮
             case "black5":
 
-
-
-                return  Chess5CanMove(TargetPos, dragging.position);
-
-                
+                return  Chess5CanMove(TargetPos, pos);
 
             // 車走法
             case "red6":
             case "black6":
 
-                return  Chess6CanMove(TargetPos, dragging.position);
+                return  Chess6CanMove(TargetPos, pos);
 
-                
 
             // 紅仕走法
             case "red7":
 
                 if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y >= -9) && (TargetPos.y <= -5))
                 {
-                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
-                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
+                    if (((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x + 2)) ||
+                        ((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x - 2)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y - 2)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y + 2)))
                     {
                         return true;
                     }
@@ -187,10 +169,10 @@ public class ChessMovement
 
                 if ((TargetPos.x <= 2) && (TargetPos.x >= -2) && (TargetPos.y <= 9) && (TargetPos.y >= 5))
                 {
-                    if (((TargetPos.y == dragging.position.y + 2) && (TargetPos.x == dragging.position.x + 2)) ||
-                        ((TargetPos.y == dragging.position.y - 2) && (TargetPos.x == dragging.position.x - 2)) ||
-                        ((TargetPos.x == dragging.position.x + 2) && (TargetPos.y == dragging.position.y - 2)) ||
-                        ((TargetPos.x == dragging.position.x - 2) && (TargetPos.y == dragging.position.y + 2)))
+                    if (((TargetPos.y == pos.y + 2) && (TargetPos.x == pos.x + 2)) ||
+                        ((TargetPos.y == pos.y - 2) && (TargetPos.x == pos.x - 2)) ||
+                        ((TargetPos.x == pos.x + 2) && (TargetPos.y == pos.y - 2)) ||
+                        ((TargetPos.x == pos.x - 2) && (TargetPos.y == pos.y + 2)))
                     {
                         return true;
                     }
@@ -223,49 +205,58 @@ public class ChessMovement
     private bool Chess3RayDirection(Vector3 pos, Vector3 d, string s)
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(pos + d, d,
-                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
+        RaycastHit2D hit = Physics2D.Raycast(pos + d, d, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        switch (s)
+        if (hit)
         {
-            case "LeftUp":
+            int hitPosX = Mathf.RoundToInt(hit.transform.position.x);
+            int hitPosY = Mathf.RoundToInt(hit.transform.position.y);
 
-                if (hit && (hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y + 2))
-                {
-                    Debug.Log(hit.transform.name);
-                    return false;
-                }
+            switch (s)
+            {
+                case "LeftUp":
 
-                break;
+                    if (hitPosX == pos.x - 2 && hitPosY == pos.y + 2)
+                    {
+                        Debug.Log(hit.transform.name);
+                        return false;
+                    }
 
-            case "RightUp":
-                if (hit && (hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y + 2))
-                {
-                    Debug.Log(hit.transform.name);
-                    return false;
-                }
+                    break;
 
-                break;
+                case "RightUp":
+                    if (hitPosX == pos.x + 2 && hitPosY == pos.y + 2)
+                    {
+                        Debug.Log(hit.transform.name);
+                        return false;
+                    }
 
-            case "LeftDown":
-                if (hit && (hit.transform.position.x == pos.x - 2) && (hit.transform.position.y == pos.y - 2))
-                {
-                    Debug.Log(hit.transform.name);
-                    return false;
-                }
+                    break;
 
-                break;
+                case "LeftDown":
+                    if (hitPosX == pos.x - 2 && hitPosY == pos.y - 2)
+                    {
+                        Debug.Log(hit.transform.name);
+                        return false;
+                    }
 
-            case "RightDown":
-                if (hit && (hit.transform.position.x == pos.x + 2) && (hit.transform.position.y == pos.y - 2))
-                {
-                    Debug.Log(hit.transform.name);
-                    return false;
-                }
+                    break;
 
-                break;
+                case "RightDown":
+                    if (hitPosX == pos.x + 2 && hitPosY == pos.y - 2)
+                    {
+                        Debug.Log(hit.transform.name);
+                        return false;
+                    }
+
+                    break;
+
+            }
+
 
         }
+
+            
 
         return true;
 
@@ -274,7 +265,7 @@ public class ChessMovement
     // 馬走法
     private bool Chess4CanMove(Vector3 Tpos, Vector3 pos)
     {
-
+        
         if ((Mathf.Abs(Tpos.x - pos.x) + Mathf.Abs(Tpos.y - pos.y) == 6)
                 && (Mathf.Abs(Tpos.x - pos.x) != 6)
                 && (Mathf.Abs(Tpos.y - pos.y) != 6))
@@ -300,52 +291,58 @@ public class ChessMovement
     // 馬碰撞檢測
     private bool Chess4RayDirection(Vector3 d, Vector3 v, string s)
     {
+        RaycastHit2D hit = Physics2D.Raycast(d + v, v, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        RaycastHit2D hit = Physics2D.Raycast(d + v, v,
-                                            Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-
-        switch (s) // 判斷障礙物
+        if(hit)
         {
-            case "Right":
+            int hitPosX = Mathf.RoundToInt(hit.transform.position.x);
+            int hitPosY = Mathf.RoundToInt(hit.transform.position.y);
 
-                if (hit && (hit.transform.position.x == d.x + 2))
-                {
-                    return true;
-                }
+            switch (s) // 判斷障礙物
+            {
+                case "Right":
 
-
-                break;
-
-            case "Left":
-
-                if (hit && (hit.transform.position.x == d.x - 2))
-                {
-                    return true;
-                }
+                    if (hitPosX == d.x + 2)
+                    {
+                        return true;
+                    }
 
 
-                break;
+                    break;
 
-            case "Up":
+                case "Left":
 
-                if (hit && (hit.transform.position.y == d.y + 2))
-                {
-                    return true;
-                }
-
-
-                break;
-
-            case "Down":
-
-                if (hit && (hit.transform.position.y == d.y - 2))
-                {
-                    return true;
-                }
+                    if (hitPosX == d.x - 2)
+                    {
+                        return true;
+                    }
 
 
-                break;
+                    break;
+
+                case "Up":
+
+                    if (hitPosY == d.y + 2)
+                    {
+                        return true;
+                    }
+
+
+                    break;
+
+                case "Down":
+
+                    if (hitPosY == d.y - 2)
+                    {
+                        return true;
+                    }
+
+
+                    break;
+            }
         }
+
+        
 
         return false;
     }
@@ -354,18 +351,13 @@ public class ChessMovement
     private bool Chess5CanMove(Vector3 Tpos, Vector3 pos)
     {
 
-
         if ((Tpos.x < pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.left, Vector3.right, "Left")) ||
             (Tpos.x > pos.x && Tpos.y == pos.y && Chess5RayDirection(Tpos, pos, Vector3.right, Vector3.left, "Right")) ||
             (Tpos.y > pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.up, Vector3.down, "Up")) ||
             (Tpos.y < pos.y && Tpos.x == pos.x && Chess5RayDirection(Tpos, pos, Vector3.down, Vector3.up, "Down")))
         {
-
             return true;
-
         }
-
-
 
         return false;
     }
@@ -480,7 +472,6 @@ public class ChessMovement
 
                 if (hit && Tpos.x > hit.transform.position.x)
                 {
-                    Debug.Log(1);
                     return false;
                 }
 
@@ -514,7 +505,6 @@ public class ChessMovement
 
                 if (hit && Tpos.y < hit.transform.position.y)
                 {
-                    Debug.Log(4);
                     return false;
                 }
 

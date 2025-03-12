@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 public class MapController : MonoBehaviour
 {
-    public GameObject board;
+    [SerializeField] GameObject board;
     
     public Transform RedChess;
     public Transform BlackChess;
@@ -16,8 +16,8 @@ public class MapController : MonoBehaviour
 
     const int x = -8; // x 原點
     const int y = -9; // y 原點
-    const int xInterval = 2; // x 間隔
-    const int yInterval = 2; // y 間隔
+    const int Interval = 2; // 間隔
+    
 
     GameObject child;
     Vector3 pos;
@@ -25,9 +25,17 @@ public class MapController : MonoBehaviour
 
     void Start()
     {
-        
+
+        Screen.orientation = ScreenOrientation.Portrait;
+
         pos = new Vector3(0, 0, 0);
-        Instantiation(board, pos); // 生成地圖
+        child = Instantiate(board, pos, Quaternion.identity); // 生成地圖
+        
+        RedChess.transform.SetParent(child.transform);
+        BlackChess.transform.SetParent(child.transform);
+
+
+
         InitMap();
     }
 
@@ -37,50 +45,50 @@ public class MapController : MonoBehaviour
         // 生成兵
         for (int i = 0; i < 5; i++)
         {
-            pos = new Vector3(x + i * 2 * xInterval, y + 3 * yInterval, 0);
+            pos = new Vector3(x + i * 2 * Interval, y + 3 * Interval, 0);
             Instantiation(red1, pos);
-            pos = new Vector3(x + i * 2 * xInterval, y + 6 * yInterval, 0);
+            pos = new Vector3(x + i * 2 * Interval, y + 6 * Interval, 0);
             Instantiation(black1, pos);
 
         }
 
         // 生成帥
-        pos = new Vector3(x + 4 * xInterval, y, 0);
+        pos = new Vector3(x + 4 * Interval, y, 0);
         Instantiation(red2, pos);
-        pos = new Vector3(x + 4 * xInterval, y + 9 * yInterval, 0);
+        pos = new Vector3(x + 4 * Interval, y + 9 * Interval, 0);
         Instantiation(black2, pos);
 
         
         for (int i = 0; i < 2; i += 1)
         {
             // 生成相
-            pos = new Vector3((x + 2 * xInterval) + i * 4 * xInterval, y, 0);
+            pos = new Vector3((x + 2 * Interval) + i * 4 * Interval, y, 0);
             Instantiation(red3, pos);
-            pos = new Vector3((x + 2 * xInterval) + i * 4 * xInterval, y + 9 * yInterval, 0);
+            pos = new Vector3((x + 2 * Interval) + i * 4 * Interval, y + 9 * Interval, 0);
             Instantiation(black3, pos);
 
             //  生成馬
-            pos = new Vector3((x + xInterval) + i * 6 * xInterval, y, 0);
+            pos = new Vector3((x + Interval) + i * 6 * Interval, y, 0);
             Instantiation(red4, pos);
-            pos = new Vector3((x + xInterval) + i * 6 * xInterval, y + 9 * yInterval, 0);
+            pos = new Vector3((x + Interval) + i * 6 * Interval, y + 9 * Interval, 0);
             Instantiation(black4, pos);
 
             // 生成炮
-            pos = new Vector3((x + xInterval) + i * 6 * xInterval, y + 2 * yInterval, 0);
+            pos = new Vector3((x + Interval) + i * 6 * Interval, y + 2 * Interval, 0);
             Instantiation(red5, pos);
-            pos = new Vector3((x + xInterval) + i * 6 * xInterval, y + 7 * yInterval, 0);
+            pos = new Vector3((x + Interval) + i * 6 * Interval, y + 7 * Interval, 0);
             Instantiation(black5, pos);
 
             //  生成車
-            pos = new Vector3(x + i * 8 * xInterval, y, 0);
+            pos = new Vector3(x + i * 8 * Interval, y, 0);
             Instantiation(red6, pos);
-            pos = new Vector3(x + i * 8 * xInterval, y + 9 * yInterval, 0);
+            pos = new Vector3(x + i * 8 * Interval, y + 9 * Interval, 0);
             Instantiation(black6, pos);
 
             // 生成士
-            pos = new Vector3((x + 3 * xInterval) + i * 2 * xInterval, y, 0);
+            pos = new Vector3((x + 3 * Interval) + i * 2 * Interval, y, 0);
             Instantiation(red7, pos);
-            pos = new Vector3((x + 3 * xInterval) + i * 2 * xInterval, y + 9 * yInterval, 0);
+            pos = new Vector3((x + 3 * Interval) + i * 2 * Interval, y + 9 * Interval, 0);
             Instantiation(black7, pos);
         }
 

@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     
     int OriginalX = -8 ,  OriginalY = -9;// 起點
     int x = -9 ,  y = -10; // 最下
-    int x1 = 2 , y1 = 2; // 間隔
+    public int Interval = 2; // 間隔
 
     int round;
 
@@ -109,16 +109,16 @@ public class GameController : MonoBehaviour
                 Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 pos.z = 0;
                 int tmp = 0;
-                TargetPos = new Vector3(0 , 0 , 0);
+                TargetPos = pos;
 
-                // 確認有無超出格子範圍
-                for (int i = x; i < OriginalX + x1 * 8 ; i += x1)
+                // 保持棋子在格子的正中央 
+                for (int i = x; i < OriginalX + Interval * 8 ; i += Interval)
                 {
-                    float xtmp = i + x1;
+                    float xtmp = i + Interval;
                     
                     if((pos.x > i) && (pos.x < xtmp))
                     {
-                        TargetPos.x = OriginalX + tmp * x1;
+                        TargetPos.x = Mathf.Round(OriginalX + tmp * Interval);
                         break;
                         
                     }
@@ -126,13 +126,13 @@ public class GameController : MonoBehaviour
                     tmp += 1;
                 }
                 tmp = 0;
-                for (int j = y; j < OriginalY + y1 * 9 ; j += y1)
+                for (int j = y; j < OriginalY + Interval * 9 ; j += Interval)
                 {
-                    int ytmp = j + y1;
+                    int ytmp = j + Interval;
                     
                     if ((pos.y > j) && (pos.y < ytmp))
                     {
-                        TargetPos.y = OriginalY + tmp * y1;
+                        TargetPos.y = Mathf.Round(OriginalY + tmp * Interval);
                         break;
                     }
 
@@ -140,21 +140,12 @@ public class GameController : MonoBehaviour
                 }
 
                 
-
-                if (!HackMode)
-                {
-                    //Movable = WhichTargetMove(target);
-                    Movable = chessMovement.WhichTargetMove(target , TargetPos , dragging);
-                }
-                else
-                {
-                    Movable = true;
-                }
-
+                Movable = !HackMode ? chessMovement.WhichTargetMove(target, TargetPos, dragging) : true;
 
                 r = GameObject.FindWithTag("red2").transform;
                 b = GameObject.FindWithTag("black2").transform;
                 //判斷是否超出棋盤
+                // Debug.Log(Movable);
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
                 {
 

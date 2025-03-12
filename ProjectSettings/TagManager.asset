@@ -66,9 +66,9 @@ TagManager:
   - name: Chess
     uniqueID: 2137812939
     locked: 0
-  - name: game_option
-    uniqueID: 2727054083
-    locked: 0
   - name: Text
     uniqueID: 4192805427
+    locked: 0
+  - name: MenuOption
+    uniqueID: 2727054083
     locked: 0

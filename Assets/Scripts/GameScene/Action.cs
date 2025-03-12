@@ -35,7 +35,7 @@ public class Action : MonoBehaviour
 
         if (gameController.IsEnd)
         {
-
+            WhoWinText.gameObject.SetActive(true);
             switch (gameController.Turn)
             {
                 case true:

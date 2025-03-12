@@ -166,6 +166,11 @@ public class Replay : MonoBehaviour
         }
     }
 
+    public void SetLandscapeLeft()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+    }
+
 
 }
 
