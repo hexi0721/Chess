@@ -13,7 +13,7 @@ public class HomeMenuOption : MonoBehaviour
 
     public GameObject Arrow_left , Arrow_right;
     [SerializeField] GameObject exitGameBtn, enterGameBtn;
-    [SerializeField] float speed = 5f;
+    [SerializeField] float speed;
 
     private void Start()
     {
@@ -23,10 +23,10 @@ public class HomeMenuOption : MonoBehaviour
             SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
         });
 
+        CreateEventEntry(exitGameBtn); // 添加hover事件
+        CreateEventEntry(enterGameBtn); // 添加hover事件
 
-
-        CreateEventEntry(exitGameBtn);
-        CreateEventEntry(enterGameBtn);
+        HoverButton(enterGameBtn); // 初始化箭頭位置
 
     }
 
@@ -54,8 +54,9 @@ public class HomeMenuOption : MonoBehaviour
 
     public void HoverButton(GameObject go)
     {
-        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_left.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
-        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(Arrow_right.GetComponent<RectTransform>().localPosition.x, go.GetComponent<RectTransform>().localPosition.y, 0);
+        float range = 250f;
+        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x + range, go.GetComponent<RectTransform>().localPosition.y, 0);
+        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x - range, go.GetComponent<RectTransform>().localPosition.y, 0);
     }
 
 

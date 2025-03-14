@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ public class Replay : MonoBehaviour
     public List<GameObject> Revive_Chess ; // 要復活的棋子
     public List<bool> isCollision ; // 確認是否碰撞
 
-    [SerializeField] Text whoWin , replayContent;
+    [SerializeField] TextMeshProUGUI whoWin , replayContent;
 
     public bool turn;
     public int index;
@@ -40,7 +41,7 @@ public class Replay : MonoBehaviour
         turn = false;
 
 
-        replayContentString = new List<string>();
+        //replayContentString = new List<string>();
         allStrings = "";
 
         transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(Last);
@@ -57,7 +58,7 @@ public class Replay : MonoBehaviour
         action.RoundText.text = "第" + (index / 2 + 1) + "回合";
 
 
-        replayContent.GetComponent<RectTransform>().localPosition = new Vector3(replayContent.transform.localPosition.x, replayContent.GetComponent<RectTransform>().sizeDelta.y, 0);
+        //replayContent.GetComponent<RectTransform>().localPosition = new Vector3(replayContent.transform.localPosition.x, replayContent.GetComponent<RectTransform>().sizeDelta.y, 0);
     }
 
     public void PlayReWatch()
@@ -152,7 +153,7 @@ public class Replay : MonoBehaviour
                 allStrings = string.Join("\n", replayContentString);
             }
 
-            replayContent.text = allStrings;
+            //replayContent.text = allStrings;
 
             
 

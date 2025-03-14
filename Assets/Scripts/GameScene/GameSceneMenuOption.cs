@@ -11,7 +11,7 @@ public class GameSceneMenuOption : MonoBehaviour
     public GameObject Arrow_left, Arrow_right;
     public GameObject settingBtn , inerOption;
     [SerializeField] GameController gameController;
-    [SerializeField] float speed = 5f;
+    [SerializeField] float speed;
 
     private void Start()
     {
@@ -28,6 +28,8 @@ public class GameSceneMenuOption : MonoBehaviour
         CreateEventEntry(iner.GetChild(1).GetChild(0).gameObject);
         CreateEventEntry(iner.GetChild(2).gameObject);
         CreateEventEntry(iner.GetChild(3).gameObject);
+
+        HoverButton(iner.GetChild(0).gameObject);
     }
 
     void Update()
@@ -55,9 +57,9 @@ public class GameSceneMenuOption : MonoBehaviour
 
     public void HoverButton(GameObject go)
     {
-        Debug.Log($"{go} work");
-        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x + 240f, go.GetComponent<RectTransform>().localPosition.y, 0);
-        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x - 240f, go.GetComponent<RectTransform>().localPosition.y, 0);
+        float range = 250f;
+        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x + range, go.GetComponent<RectTransform>().localPosition.y, 0);
+        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x - range, go.GetComponent<RectTransform>().localPosition.y, 0);
     }
 
     public void ClickGameReturnOrOpenMenu()

@@ -193,11 +193,11 @@ public class GameController : MonoBehaviour
                         if (!Turn)
                         {
 
-                            action.RoundText.text = "第" + round + "回合 - 紅";
+                            action.RoundText.text = "第" + round + "回合 - 紅方";
                         }
                         else
                         {
-                            action.RoundText.text = "第" + round + "回合 - 黑";
+                            action.RoundText.text = "第" + round + "回合 - 黑方";
                             round += 1;
                         }
 

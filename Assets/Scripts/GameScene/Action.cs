@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -9,8 +10,8 @@ using UnityEngine.UI;
 public class Action : MonoBehaviour
 {
 
-    [SerializeField] Text WhoWinText ;
-    public Text RoundText;
+    [SerializeField] TextMeshProUGUI WhoWinText ;
+    public TextMeshProUGUI RoundText;
 
     [SerializeField] GameObject StatScrollView;
     GameController gameController;
@@ -39,11 +40,11 @@ public class Action : MonoBehaviour
             switch (gameController.Turn)
             {
                 case true:
-                    WhoWinText.text = "¬õ¤è³Ó !";
+                    WhoWinText.text = "¬õ¤è³Ó";
                     break;
 
                 case false:
-                    WhoWinText.text = "¶Â¤è³Ó !";
+                    WhoWinText.text = "¶Â¤è³Ó";
                     break;
             }
 
