@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 public class MapController : MonoBehaviour
 {
-    [SerializeField] GameObject board;
+    [SerializeField] Transform board;
     
     public Transform RedChess;
     public Transform BlackChess;
@@ -18,8 +18,6 @@ public class MapController : MonoBehaviour
     const int y = -9; // y 原點
     const int Interval = 2; // 間隔
     
-
-    GameObject child;
     Vector3 pos;
 
 
@@ -29,12 +27,9 @@ public class MapController : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
 
         pos = new Vector3(0, 0, 0);
-        child = Instantiate(board, pos, Quaternion.identity); // 生成地圖
-        
-        RedChess.transform.SetParent(child.transform);
-        BlackChess.transform.SetParent(child.transform);
 
-
+        RedChess.transform.SetParent(board.transform);
+        BlackChess.transform.SetParent(board.transform);
 
         InitMap();
     }
@@ -103,12 +98,12 @@ public class MapController : MonoBehaviour
         
         if (S == "black")
         {
-            /* 轉向
+
             if (Flip)
             {
                 G.transform.Rotate(new Vector3(0, 0, 180));
             }
-            */
+
             layer = LayerMask.NameToLayer("black");
             G.layer = layer;
             
@@ -124,7 +119,7 @@ public class MapController : MonoBehaviour
 
     public void Instantiation(GameObject G, Vector3 pos) // 生成棋子
     {
-        child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
+        GameObject child = GameObject.Instantiate(G, pos, Quaternion.identity) as GameObject;
 
         if (Regex.IsMatch(G.transform.tag, "red"))
         {

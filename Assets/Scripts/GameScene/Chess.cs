@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
 
-
 public class Chess : MonoBehaviour
 {
     GameController gameController;

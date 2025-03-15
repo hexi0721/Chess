@@ -10,6 +10,7 @@ public class ChessMovement
         int x = Mathf.RoundToInt(dragging.position.x);
         int y = Mathf.RoundToInt(dragging.position.y);
         Vector3 pos = new Vector3(x, y , 0);
+
         switch (target)
         {
             // 紅兵走法
@@ -363,73 +364,80 @@ public class ChessMovement
     }
 
     // 炮砲碰撞檢測
-    private bool Chess5RayDirection(Vector3 pos, Vector3 d, Vector3 v1, Vector3 v2, string s)
+    private bool Chess5RayDirection(Vector3 Tpos, Vector3 pos, Vector3 v1, Vector3 v2, string s)
     {   // 原點
-        RaycastHit2D hit = Physics2D.Raycast(d + v1, v1,
+        RaycastHit2D hit = Physics2D.Raycast(pos + v1, v1,
                                             Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
         // 目標向哪方發出射線
-        RaycastHit2D hit2 = Physics2D.Raycast(pos + v2, v2,
+        RaycastHit2D hit2 = Physics2D.Raycast(Tpos + v2, v2,
                         Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
-        switch (s)
+
+        if(hit)
         {
 
-            case "Left":
+            int hitPosX = Mathf.RoundToInt(hit.transform.position.x);
+            int hitPosY = Mathf.RoundToInt(hit.transform.position.y);
+
+            switch (s)
+            {
+
+                case "Left":
 
 
-                if (hit && hit.transform.position.x >= pos.x)
-                {
-                    return chess5iner(pos);
+                    if (hitPosX >= Tpos.x)
+                    {
+                        return chess5iner(Tpos);
 
-                }
+                    }
 
-                break;
+                    break;
 
-            case "Right":
+                case "Right":
 
-                if (hit && hit.transform.position.x <= pos.x)
-                {
-                    return chess5iner(pos);
+                    if (hitPosX <= Tpos.x)
+                    {
+                        return chess5iner(Tpos);
 
-                }
-
-
-                break;
+                    }
 
 
-            case "Up":
+                    break;
 
 
-                if (hit && hit.transform.position.y <= pos.y)
-                {
-                    return chess5iner(pos);
-
-                }
+                case "Up":
 
 
-                break;
+                    if (hitPosY <= Tpos.y)
+                    {
+                        return chess5iner(Tpos);
 
-            case "Down":
+                    }
 
-                if (hit && hit.transform.position.y >= pos.y)
-                {
-                    return chess5iner(pos);
 
-                }
+                    break;
 
-                break;
+                case "Down":
 
+                    if (hitPosY >= Tpos.y)
+                    {
+                        return chess5iner(Tpos);
+
+                    }
+
+                    break;
+
+            }
         }
-
 
         return true;
 
 
-        bool chess5iner(Vector3 pos)
+        bool chess5iner(Vector3 Tpos)
         {
             // 點擊位置
-            RaycastHit2D hit3 = Physics2D.Raycast(pos, Vector3.zero,
+            RaycastHit2D hit3 = Physics2D.Raycast(Tpos, Vector3.zero,
                             Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
             if (hit3 && hit2 && hit.transform.position == hit2.transform.position && hit.transform.position != hit3.transform.position && hit2.transform.position != hit3.transform.position)
@@ -465,52 +473,56 @@ public class ChessMovement
     {
         RaycastHit2D hit = Physics2D.Raycast(pos + v, v, Mathf.Infinity, 1 << LayerMask.NameToLayer("red") | 1 << LayerMask.NameToLayer("black"));
 
-        switch (s)
+        if (hit)
         {
-            case "Right":
+            int hitPosX = Mathf.RoundToInt(hit.transform.position.x);
+            int hitPosY = Mathf.RoundToInt(hit.transform.position.y);
+
+            switch (s)
+            {
+                case "Right":
+
+                    if (Tpos.x > hitPosX)
+                    {
+                        return false;
+                    }
+
+                    break;
+
+                case "Left":
+
+                    if (Tpos.x < hitPosX)
+                    {
+                        return false;
+                    }
 
 
-                if (hit && Tpos.x > hit.transform.position.x)
-                {
-                    return false;
-                }
-
-                break;
-
-            case "Left":
+                    break;
 
 
-                if (hit && Tpos.x < hit.transform.position.x)
-                {
-                    return false;
-                }
+                case "Up":
 
 
-                break;
+                    if (Tpos.y > hitPosY)
+                    {
+                        return false;
+                    }
 
 
-            case "Up":
+                    break;
+
+                case "Down":
 
 
-                if (hit && Tpos.y > hit.transform.position.y)
-                {
-                    return false;
-                }
+                    if (Tpos.y < hitPosY)
+                    {
+                        return false;
+                    }
 
 
-                break;
+                    break;
 
-            case "Down":
-
-
-                if (hit && Tpos.y < hit.transform.position.y)
-                {
-                    return false;
-                }
-
-
-                break;
-
+            }
         }
 
         return true;

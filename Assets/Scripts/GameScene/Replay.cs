@@ -18,17 +18,11 @@ public class Replay : MonoBehaviour
     public List<GameObject> Revive_Chess ; // 要復活的棋子
     public List<bool> isCollision ; // 確認是否碰撞
 
-    [SerializeField] TextMeshProUGUI whoWin , replayContent;
-
     public bool turn;
     public int index;
 
     [SerializeField] MapController mapController;
     [SerializeField] Action action;
-    [SerializeField] GameSceneMenuOption gameSceneMenuOption;
-
-    List<string> replayContentString;
-    string allStrings;
 
     void Awake()
     {
@@ -40,9 +34,6 @@ public class Replay : MonoBehaviour
         index = 0;
         turn = false;
 
-
-        //replayContentString = new List<string>();
-        allStrings = "";
 
         transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(Last);
         transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(Next);
@@ -57,8 +48,6 @@ public class Replay : MonoBehaviour
 
         action.RoundText.text = "第" + (index / 2 + 1) + "回合";
 
-
-        //replayContent.GetComponent<RectTransform>().localPosition = new Vector3(replayContent.transform.localPosition.x, replayContent.GetComponent<RectTransform>().sizeDelta.y, 0);
     }
 
     public void PlayReWatch()
@@ -71,12 +60,15 @@ public class Replay : MonoBehaviour
         transform.parent.GetChild(2).gameObject.SetActive(true); // ResetBtn
         transform.parent.GetChild(3).gameObject.SetActive(true); // HomeBtn
 
-        gameSceneMenuOption.HoverButton(transform.parent.GetChild(2).gameObject);
+        
         transform.GetChild(1).gameObject.SetActive(true); // last
         transform.GetChild(2).gameObject.SetActive(true); // next
-        transform.GetChild(3).gameObject.SetActive(true); // replayView
 
-        whoWin.text = "";
+
+        action.WhoWinText.text = "";
+
+        Destroy(GameObject.FindWithTag("Focus"));
+
 
 
     }
@@ -88,24 +80,12 @@ public class Replay : MonoBehaviour
             turn = !turn ;
             index -= 1;
 
-            replayContentString.RemoveAt(replayContentString.Count - 1);
-
-            allStrings = "";
-            foreach (string s in replayContentString)
-            {
-                allStrings = string.Join("\n", replayContentString);
-            }
-
-            replayContent.text = allStrings;
-
             RaycastHit2D hit = Physics2D.Raycast(Destination[index], Vector3.zero, Mathf.Infinity);
             
 
             if (hit)
             {
                 hit.transform.position = OriginalLocation[index];
-
-
 
                 if (isCollision[index] == true)
                 {
@@ -135,36 +115,12 @@ public class Replay : MonoBehaviour
 
                 index += 1;
 
-                if (hit2.collider != null)
-                {
-                    replayContentString.Add(hit.transform.name[0] + "  吃  " + hit2.transform.name[0]);
 
-                }
-                else
-                {
-                    replayContentString.Add(hit.transform.name[0] + "  移動");
-                    
-                }
             }
-
-            allStrings = "";
-            foreach (string s in replayContentString)
-            {
-                allStrings = string.Join("\n", replayContentString);
-            }
-
-            //replayContent.text = allStrings;
-
-            
 
             turn = !turn ;
 
         }
-    }
-
-    public void SetLandscapeLeft()
-    {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
 

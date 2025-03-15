@@ -41,9 +41,6 @@ public class CheckMate : MonoBehaviour
 
             King = GameObject.FindWithTag("black2").transform.position;
 
-           /* RaycastHit2D h = Physics2D.Raycast(King.transform.position + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-            Debug.Log(2 + " " + h.transform.name);*/
-
             if (gameController.Turn == true && JudgeChess1IsCheckMate("red1", King) || JudgeChess2IsCheckMate("red2", King) || JudgeChess4IsCheckMate("red4", King) || JudgeChess5IsCheckMate("red5", King) || JudgeChess6IsCheckMate("red6", King))
             {
                 redcheckmate = true;
@@ -56,9 +53,7 @@ public class CheckMate : MonoBehaviour
 
 
             gameController.JudgeCheckMateTurnIsChange = false;
-            //Debug.Log(blackcheckmate + " " + redcheckmate);
-            
-            
+
         }
 
         if (!gameController.IsEnd)
@@ -291,7 +286,6 @@ public class CheckMate : MonoBehaviour
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            //Action.Instance.StatText.text += "CheckMate!\n";
             
             redcheckmate = false;
         }
@@ -299,7 +293,6 @@ public class CheckMate : MonoBehaviour
         {
 
             AudioManager.Instance.PlayAuido(AudioManager.Instance.CheckMateAudio);
-            //Action.Instance.StatText.text += "CheckMate!\n";
             
             blackcheckmate = false;
         }

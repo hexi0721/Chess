@@ -10,14 +10,11 @@ using UnityEngine.UI;
 public class Action : MonoBehaviour
 {
 
-    [SerializeField] TextMeshProUGUI WhoWinText ;
-    public TextMeshProUGUI RoundText;
+    public TextMeshProUGUI WhoWinText , RoundText;
+    
 
-    [SerializeField] GameObject StatScrollView;
     GameController gameController;
     [SerializeField] GameSceneMenuOption gameSceneMenuOption;
-
-    
 
     void Start()
     {
@@ -26,7 +23,7 @@ public class Action : MonoBehaviour
         
         gameSceneMenuOption.inerOption.SetActive(false); // 順序不可往上移動
         
-        StatScrollView.SetActive(false);
+
     }
 
     void Update()

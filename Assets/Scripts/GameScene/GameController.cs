@@ -142,8 +142,13 @@ public class GameController : MonoBehaviour
                 
                 Movable = !HackMode ? chessMovement.WhichTargetMove(target, TargetPos, dragging) : true;
 
-                r = GameObject.FindWithTag("red2").transform;
-                b = GameObject.FindWithTag("black2").transform;
+
+                if(r == null && b == null)
+                {
+                    r = GameObject.FindWithTag("red2").transform;
+                    b = GameObject.FindWithTag("black2").transform;
+                }
+
                 //判斷是否超出棋盤
                 // Debug.Log(Movable);
                 if ((pos.x > -9) && (pos.y > -10) && (pos.x <  9 ) && (pos.y < 10 ) && Movable && (dragging.position != TargetPos)) 
@@ -160,12 +165,8 @@ public class GameController : MonoBehaviour
                     Replay.Instance.OriginalLocation.Add(dragging.position);
                     Replay.Instance.Destination.Add(TargetPos);
 
-
                     dragging.position = TargetPos;
                     FocusTmp.transform.position = TargetPos;
-
-                    /*RaycastHit2D h = Physics2D.Raycast(b.transform.position + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
-                    Debug.Log(1 + " " + h.transform.name);*/
 
                     if (hit2 && hit2.transform.position == TargetPos) // 播放聲音
                     {
@@ -187,7 +188,6 @@ public class GameController : MonoBehaviour
                     Movable = false;
                     if (IsEnd != true)
                     {
-
 
 
                         if (!Turn)

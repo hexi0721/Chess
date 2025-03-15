@@ -8,14 +8,13 @@ using UnityEngine.UI;
 public class GameSceneMenuOption : MonoBehaviour
 {
 
-    public GameObject Arrow_left, Arrow_right;
-    public GameObject settingBtn , inerOption;
+    public GameObject settingBtn, inerOption;
     [SerializeField] GameController gameController;
     [SerializeField] float speed;
 
+
     private void Start()
     {
-        
 
         Transform iner = inerOption.transform;
         iner.GetChild(0).GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // ReturnBtn
@@ -24,42 +23,6 @@ public class GameSceneMenuOption : MonoBehaviour
         iner.GetChild(3).GetComponent<Button>().onClick.AddListener(HomeReturn); // HomeReturnBtn
         settingBtn.GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // SettingBtn
 
-        CreateEventEntry(iner.GetChild(0).gameObject);
-        CreateEventEntry(iner.GetChild(1).GetChild(0).gameObject);
-        CreateEventEntry(iner.GetChild(2).gameObject);
-        CreateEventEntry(iner.GetChild(3).gameObject);
-
-        HoverButton(iner.GetChild(0).gameObject);
-    }
-
-    void Update()
-    {
-        // Ωb¿Y±€¬‡
-        Arrow_left.transform.Rotate(speed * Time.deltaTime, 0, 0);
-        Arrow_right.transform.Rotate(speed * Time.deltaTime, 0, 0);
-
-
-    }
-
-    public void CreateEventEntry(GameObject go)
-    {
-        if (go.GetComponent<EventTrigger>() == null)
-        {
-            go.AddComponent<EventTrigger>();
-        }
-
-
-        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-
-        entry.callback.AddListener((data) => { HoverButton(go); });
-        go.GetComponent<EventTrigger>().triggers.Add(entry);
-    }
-
-    public void HoverButton(GameObject go)
-    {
-        float range = 250f;
-        Arrow_left.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x + range, go.GetComponent<RectTransform>().localPosition.y, 0);
-        Arrow_right.GetComponent<RectTransform>().localPosition = new Vector3(go.GetComponent<RectTransform>().localPosition.x - range, go.GetComponent<RectTransform>().localPosition.y, 0);
     }
 
     public void ClickGameReturnOrOpenMenu()
@@ -98,15 +61,24 @@ public class GameSceneMenuOption : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
         AudioManager.Instance.PlayAuido(AudioManager.Instance.RestartAudio);
         SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
-        
+
     }
 
     public void ReplayBtn()
     {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        inerOption.transform.GetChild(2).GetComponent<RectTransform>().localPosition = new Vector2(-750, -180);
-        inerOption.transform.GetChild(3).GetComponent<RectTransform>().localPosition = new Vector2(-750, -400);
-        Replay.Instance.PlayReWatch();
-    }
 
+        for (int i = 2; i <= 3; i++)
+        {
+            inerOption.transform.GetChild(i).GetComponent<RectTransform>().anchorMin = Vector2.zero;
+            inerOption.transform.GetChild(i).GetComponent<RectTransform>().anchorMax = Vector2.zero;
+            inerOption.transform.GetChild(i).GetComponent<RectTransform>().pivot = Vector2.zero;
+        }
+
+        inerOption.transform.GetChild(2).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 300);
+        inerOption.transform.GetChild(3).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 50);
+
+        Replay.Instance.PlayReWatch();
+
+    }
 }
+
