@@ -286,7 +286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhoWinText: {fileID: 550919004}
   RoundText: {fileID: 973917205}
-  StatScrollView: {fileID: 0}
   gameSceneMenuOption: {fileID: 582206128}
 --- !u!114 &133833469
 MonoBehaviour:
@@ -295,7 +294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133833462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd17f9e81e2f38143b8ad2fbe6e4bb6c, type: 3}
   m_Name: 
@@ -679,6 +678,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -787,6 +787,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OrthographicSize: 0
   spriteRenderer: {fileID: 1136158928}
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1809af56a30e15a4f9ef0725e80852d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foreGroundObj: {fileID: 1573095412114231032, guid: fe893ef0e48850f47a5041b8ce5048d2, type: 3}
 --- !u!1 &528824857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,7 +1283,6 @@ MonoBehaviour:
   settingBtn: {fileID: 2002946641}
   inerOption: {fileID: 2038037295}
   gameController: {fileID: 133833465}
-  speed: 50
 --- !u!1 &694086394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,13 +1503,10 @@ MonoBehaviour:
   Destination: []
   Revive_Chess: []
   isCollision: 
-  whoWin: {fileID: 550919004}
-  replayContent: {fileID: 0}
   turn: 0
   index: 0
   mapController: {fileID: 393011494}
   action: {fileID: 133833468}
-  gameSceneMenuOption: {fileID: 582206128}
 --- !u!1 &973917201
 GameObject:
   m_ObjectHideFlags: 0

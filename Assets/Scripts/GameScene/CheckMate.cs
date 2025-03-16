@@ -7,7 +7,7 @@ public class CheckMate : MonoBehaviour
 
     Vector3 King; // 帥與將位置
 
-    static bool redcheckmate , blackcheckmate ; // 哪方將軍
+    bool redcheckmate , blackcheckmate ; // 哪方將軍
     GameController gameController;
 
     void Start()

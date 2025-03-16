@@ -23,6 +23,7 @@ TagManager:
   - sound
   - Arrow
   - Focus
+  - ForeGround
   layers:
   - Default
   - TransparentFX

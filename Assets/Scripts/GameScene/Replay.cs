@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,7 +61,19 @@ public class Replay : MonoBehaviour
         transform.parent.GetChild(2).gameObject.SetActive(true); // ResetBtn
         transform.parent.GetChild(3).gameObject.SetActive(true); // HomeBtn
 
-        
+
+        for (int i = 2; i <= 3; i++)
+        {
+            transform.parent.GetChild(i).GetComponent<RectTransform>().anchorMin = Vector2.zero;
+            transform.parent.GetChild(i).GetComponent<RectTransform>().anchorMax = Vector2.zero;
+            transform.parent.GetChild(i).GetComponent<RectTransform>().pivot = Vector2.zero;
+        }
+
+        transform.parent.GetChild(2).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 300);
+        transform.parent.GetChild(3).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 50);
+
+
+
         transform.GetChild(1).gameObject.SetActive(true); // last
         transform.GetChild(2).gameObject.SetActive(true); // next
 

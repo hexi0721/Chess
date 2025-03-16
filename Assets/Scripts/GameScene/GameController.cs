@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
     int round;
 
     ChessMovement chessMovement ;
+    CheckMate2 checkMate2;
     Action action;
 
     bool HackMode = false; // 作弊
@@ -48,6 +49,7 @@ public class GameController : MonoBehaviour
         JudgeCheckMateTurnIsChange = false;
 
         chessMovement = new ChessMovement();
+        checkMate2 = new CheckMate2();
         action = GetComponent<Action>();
     }
 
@@ -118,7 +120,7 @@ public class GameController : MonoBehaviour
                     
                     if((pos.x > i) && (pos.x < xtmp))
                     {
-                        TargetPos.x = Mathf.Round(OriginalX + tmp * Interval);
+                        TargetPos.x = Mathf.RoundToInt(OriginalX + tmp * Interval);
                         break;
                         
                     }
@@ -132,7 +134,7 @@ public class GameController : MonoBehaviour
                     
                     if ((pos.y > j) && (pos.y < ytmp))
                     {
-                        TargetPos.y = Mathf.Round(OriginalY + tmp * Interval);
+                        TargetPos.y = Mathf.RoundToInt(OriginalY + tmp * Interval);
                         break;
                     }
 
@@ -168,19 +170,17 @@ public class GameController : MonoBehaviour
                     dragging.position = TargetPos;
                     FocusTmp.transform.position = TargetPos;
 
+                    bool checkMate = checkMate2.CheckMateOrNot(r, b, dragging);
+
                     if (hit2 && hit2.transform.position == TargetPos) // 播放聲音
                     {
-                        
-                        AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
-                        
+                        AudioManager.Instance.PlayAuido(checkMate ? AudioManager.Instance.CheckMateAudio : AudioManager.Instance.KillAudio);
                         Replay.Instance.isCollision.Add(true);
 
-                        
                     }
                     else
                     {
-                        AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
-                        
+                        AudioManager.Instance.PlayAuido(checkMate ? AudioManager.Instance.CheckMateAudio : AudioManager.Instance.MoveAudio);
                         Replay.Instance.isCollision.Add(false);
                     }
 

@@ -10,11 +10,12 @@ public class GameSceneMenuOption : MonoBehaviour
 
     public GameObject settingBtn, inerOption;
     [SerializeField] GameController gameController;
-    [SerializeField] float speed;
 
 
     private void Start()
     {
+
+        //ForeGroundTransition.instance.EndTransition();
 
         Transform iner = inerOption.transform;
         iner.GetChild(0).GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // ReturnBtn
@@ -51,34 +52,33 @@ public class GameSceneMenuOption : MonoBehaviour
 
     public void HomeReturn()
     {
-        Screen.orientation = ScreenOrientation.Portrait;
+        ForeGroundTransition.instance.StartTransition("Home");
         AudioManager.Instance.PlayAuido(AudioManager.Instance.QuitAudio);
-        SceneManager.LoadScene("Home", LoadSceneMode.Single);
+        
     }
 
     public void ResetBtn()
     {
-        Screen.orientation = ScreenOrientation.Portrait;
+        ForeGroundTransition.instance.StartTransition("GameScene");
         AudioManager.Instance.PlayAuido(AudioManager.Instance.RestartAudio);
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
 
     }
 
     public void ReplayBtn()
     {
 
-        for (int i = 2; i <= 3; i++)
-        {
-            inerOption.transform.GetChild(i).GetComponent<RectTransform>().anchorMin = Vector2.zero;
-            inerOption.transform.GetChild(i).GetComponent<RectTransform>().anchorMax = Vector2.zero;
-            inerOption.transform.GetChild(i).GetComponent<RectTransform>().pivot = Vector2.zero;
-        }
 
-        inerOption.transform.GetChild(2).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 300);
-        inerOption.transform.GetChild(3).GetComponent<RectTransform>().anchoredPosition = new Vector2(50, 50);
 
-        Replay.Instance.PlayReWatch();
+        ForeGroundTransition.instance.StartTransition();
+
+
+
+
+
 
     }
+
+
+    
 }
 
