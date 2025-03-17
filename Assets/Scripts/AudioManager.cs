@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
 
-    public AudioClip RestartAudio, ReturnAudio, QuitAudio , MoveAudio , KillAudio , CheckMateAudio;
+    public AudioClip Audio1, RestartAudio,  QuitAudio , MoveAudio , KillAudio , CheckMateAudio;
 
     public static AudioManager Instance
     {

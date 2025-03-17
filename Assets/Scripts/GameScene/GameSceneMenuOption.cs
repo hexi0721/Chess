@@ -15,8 +15,6 @@ public class GameSceneMenuOption : MonoBehaviour
     private void Start()
     {
 
-        //ForeGroundTransition.instance.EndTransition();
-
         Transform iner = inerOption.transform;
         iner.GetChild(0).GetComponent<Button>().onClick.AddListener(ClickGameReturnOrOpenMenu); // ReturnBtn
         iner.GetChild(1).GetChild(0).GetComponent<Button>().onClick.AddListener(ReplayBtn); // ReplayBtn
@@ -28,7 +26,7 @@ public class GameSceneMenuOption : MonoBehaviour
 
     public void ClickGameReturnOrOpenMenu()
     {
-        AudioManager.Instance.PlayAuido(AudioManager.Instance.ReturnAudio);
+        AudioManager.Instance.PlayAuido(AudioManager.Instance.Audio1);
         inerOption.SetActive(!inerOption.activeSelf);
 
         if (!Replay.Instance.IsPlaying)
@@ -67,14 +65,8 @@ public class GameSceneMenuOption : MonoBehaviour
     public void ReplayBtn()
     {
 
-
-
         ForeGroundTransition.instance.StartTransition();
-
-
-
-
-
+        AudioManager.Instance.PlayAuido(AudioManager.Instance.Audio1);
 
     }
 

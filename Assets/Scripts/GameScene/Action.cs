@@ -34,14 +34,28 @@ public class Action : MonoBehaviour
         if (gameController.IsEnd)
         {
             WhoWinText.gameObject.SetActive(true);
+            RectTransform rt = WhoWinText.GetComponent<RectTransform>();
             switch (gameController.Turn)
             {
+
                 case true:
                     WhoWinText.text = "¬õ¤è³Ó";
+                    WhoWinText.color = Color.red;
+                    rt.anchorMin = new Vector2(0.5f, 0f);
+                    rt.anchorMax = new Vector2(0.5f, 1f);
+                    rt.localRotation = Quaternion.Euler(0, 0, 0);
+
+
+
                     break;
 
                 case false:
                     WhoWinText.text = "¶Â¤è³Ó";
+                    WhoWinText.color = Color.black;
+                    rt.anchorMin = new Vector2(0.5f, 0f);
+                    rt.anchorMax = new Vector2(0.5f, 1f);
+                    rt.localRotation = Quaternion.Euler(0, 0, 180);
+                 
                     break;
             }
 

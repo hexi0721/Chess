@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckMate : MonoBehaviour
 {
 
-    Vector3 King; // 帥與將位置
+    Transform King; // 帥與將位置
 
     bool redcheckmate , blackcheckmate ; // 哪方將軍
     GameController gameController;
@@ -26,8 +26,8 @@ public class CheckMate : MonoBehaviour
         if (gameController.JudgeCheckMateTurnIsChange)
         {
             
-            King = GameObject.FindWithTag("red2").transform.position;
-
+            King = GameObject.FindWithTag("red2").transform;
+            
             if (gameController.Turn == false && JudgeChess1IsCheckMate("black1", King) || JudgeChess2IsCheckMate("black2" , King) || JudgeChess4IsCheckMate("black4" , King) || JudgeChess5IsCheckMate("black5", King) || JudgeChess6IsCheckMate("black6", King))
             {
                 blackcheckmate = true;
@@ -39,7 +39,7 @@ public class CheckMate : MonoBehaviour
             }
 
 
-            King = GameObject.FindWithTag("black2").transform.position;
+            King = GameObject.FindWithTag("black2").transform;
 
             if (gameController.Turn == true && JudgeChess1IsCheckMate("red1", King) || JudgeChess2IsCheckMate("red2", King) || JudgeChess4IsCheckMate("red4", King) || JudgeChess5IsCheckMate("red5", King) || JudgeChess6IsCheckMate("red6", King))
             {
@@ -65,20 +65,21 @@ public class CheckMate : MonoBehaviour
     }
 
     // 判斷兵卒是否將軍
-    private bool JudgeChess1IsCheckMate(string s, Vector3 pos)
+    private bool JudgeChess1IsCheckMate(string s, Transform king)
     {
+        Vector3 pos = king.position;
         RaycastHit2D hit_up = Physics2D.Raycast(pos + Vector3.up, Vector3.up, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down = Physics2D.Raycast(pos + Vector3.down, Vector3.down, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left = Physics2D.Raycast(pos + Vector3.left, Vector3.left, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_right = Physics2D.Raycast(pos + Vector3.right, Vector3.right, 1.0f, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
 
-        if (hit_up && hit_up.transform.CompareTag(s) && transform.CompareTag("red2"))
+        if (hit_up && hit_up.transform.CompareTag(s) && king.CompareTag("red2"))
         {
             return true;
 
         }
-        else if (hit_down && hit_down.transform.CompareTag(s) && transform.CompareTag("black2"))
+        else if (hit_down && hit_down.transform.CompareTag(s) && king.CompareTag("black2"))
         {
             return true;
         }
@@ -98,8 +99,9 @@ public class CheckMate : MonoBehaviour
     }
 
     // 判斷帥將是否將軍
-    private bool JudgeChess2IsCheckMate(string s, Vector3 pos)
+    private bool JudgeChess2IsCheckMate(string s, Transform king)
     {
+        Vector3 pos = king.position;
         RaycastHit2D hit_up = Physics2D.Raycast(pos + Vector3.up, Vector3.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down = Physics2D.Raycast(pos + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
@@ -117,9 +119,9 @@ public class CheckMate : MonoBehaviour
     }
 
     // 判斷馬是否將軍
-    private bool JudgeChess4IsCheckMate(string s, Vector3 pos)
+    private bool JudgeChess4IsCheckMate(string s, Transform king)
     {
-
+        Vector3 pos = king.position;
         RaycastHit2D hit_right_up = Physics2D.Raycast(pos + new Vector3(2, 4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left_up = Physics2D.Raycast(pos + new Vector3(-2, 4, 0), Vector3.zero, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
 
@@ -186,8 +188,9 @@ public class CheckMate : MonoBehaviour
     }
 
     // 判斷包砲是否將軍
-    private bool JudgeChess5IsCheckMate(string s, Vector3 pos)
+    private bool JudgeChess5IsCheckMate(string s, Transform king)
     {
+        Vector3 pos = king.position;
         RaycastHit2D hit_up = Physics2D.Raycast(pos + Vector3.up, Vector3.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down = Physics2D.Raycast(pos + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left = Physics2D.Raycast(pos + Vector3.left, Vector3.left, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
@@ -242,8 +245,10 @@ public class CheckMate : MonoBehaviour
     }
 
     //判斷車是否將軍
-    private bool JudgeChess6IsCheckMate(string s, Vector3 pos)
+    private bool JudgeChess6IsCheckMate(string s, Transform king)
     {
+        Vector3 pos = king.position;
+
         RaycastHit2D hit_up = Physics2D.Raycast(pos + Vector3.up, Vector3.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_down = Physics2D.Raycast(pos + Vector3.down, Vector3.down, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));
         RaycastHit2D hit_left = Physics2D.Raycast(pos + Vector3.left, Vector3.left, Mathf.Infinity, 1 << LayerMask.NameToLayer("black") | 1 << LayerMask.NameToLayer("red"));

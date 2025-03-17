@@ -47,7 +47,7 @@ public class Replay : MonoBehaviour
             return;
         }
 
-        action.RoundText.text = "第" + (index / 2 + 1) + "回合";
+        // action.RoundText.text = "第" + (index / 2 + 1) + "回合";
 
     }
 
@@ -77,7 +77,7 @@ public class Replay : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(true); // last
         transform.GetChild(2).gameObject.SetActive(true); // next
 
-
+        action.RoundText.text = "";
         action.WhoWinText.text = "";
 
         Destroy(GameObject.FindWithTag("Focus"));
@@ -90,6 +90,7 @@ public class Replay : MonoBehaviour
     {
         if (index > 0)
         {
+            AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
             turn = !turn ;
             index -= 1;
 
@@ -115,7 +116,7 @@ public class Replay : MonoBehaviour
     {
         if (index < Chess_Tran.Count)
         {
-
+            AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
 
             RaycastHit2D hit = Physics2D.Raycast(OriginalLocation[index], Vector3.zero, Mathf.Infinity);
 

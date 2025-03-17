@@ -4,6 +4,9 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using Unity.Burst.CompilerServices;
+using Unity.Mathematics;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class GameController : MonoBehaviour
 {
@@ -25,7 +28,6 @@ public class GameController : MonoBehaviour
     
     public bool JudgeCheckMateTurnIsChange { get; set; } // 判斷將軍的回合不能重複
 
-    
     int OriginalX = -8 ,  OriginalY = -9;// 起點
     int x = -9 ,  y = -10; // 最下
     public int Interval = 2; // 間隔
@@ -33,7 +35,7 @@ public class GameController : MonoBehaviour
     int round;
 
     ChessMovement chessMovement ;
-    CheckMate2 checkMate2;
+
     Action action;
 
     bool HackMode = false; // 作弊
@@ -49,9 +51,11 @@ public class GameController : MonoBehaviour
         JudgeCheckMateTurnIsChange = false;
 
         chessMovement = new ChessMovement();
-        checkMate2 = new CheckMate2();
+        
         action = GetComponent<Action>();
     }
+
+
 
 
     // 要確保Chess將帥射線正確  [執行順序 Chess -> GameController] 因此Chess 將帥射線能指向
@@ -170,17 +174,18 @@ public class GameController : MonoBehaviour
                     dragging.position = TargetPos;
                     FocusTmp.transform.position = TargetPos;
 
-                    bool checkMate = checkMate2.CheckMateOrNot(r, b, dragging);
+                    
+
 
                     if (hit2 && hit2.transform.position == TargetPos) // 播放聲音
                     {
-                        AudioManager.Instance.PlayAuido(checkMate ? AudioManager.Instance.CheckMateAudio : AudioManager.Instance.KillAudio);
+                        AudioManager.Instance.PlayAuido(AudioManager.Instance.KillAudio);
                         Replay.Instance.isCollision.Add(true);
 
                     }
                     else
                     {
-                        AudioManager.Instance.PlayAuido(checkMate ? AudioManager.Instance.CheckMateAudio : AudioManager.Instance.MoveAudio);
+                        AudioManager.Instance.PlayAuido(AudioManager.Instance.MoveAudio);
                         Replay.Instance.isCollision.Add(false);
                     }
 
@@ -189,16 +194,30 @@ public class GameController : MonoBehaviour
                     if (IsEnd != true)
                     {
 
-
+                        RectTransform rt = action.RoundText.GetComponent<RectTransform>();
+                        float range = 20f;
+                        float half = 2f;
                         if (!Turn)
                         {
 
                             action.RoundText.text = "第" + round + "回合 - 紅方";
+                            action.RoundText.color = Color.red;
+                            rt.anchorMin = new Vector2(0f, 1f);
+                            rt.anchorMax = new Vector2(0f, 1f);
+                            rt.localRotation = Quaternion.Euler(0, 0, 0);
+                            rt.anchoredPosition = new Vector2((rt.rect.width / half) + range , -(rt.rect.height / half) - range);
+
                         }
                         else
                         {
                             action.RoundText.text = "第" + round + "回合 - 黑方";
+                            action.RoundText.color = Color.black;
                             round += 1;
+
+                            rt.anchorMin = new Vector2(1f, 0f);
+                            rt.anchorMax = new Vector2(1f, 0f);
+                            rt.localRotation = Quaternion.Euler(0, 0, 180);
+                            rt.anchoredPosition = new Vector2(-(rt.rect.width / half) - range, (rt.rect.height / half) + range);
                         }
 
                         JudgeCheckMateTurnIsChange = true;
@@ -218,6 +237,11 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+
+
+
+
 
     private void CheatMode()
     {
